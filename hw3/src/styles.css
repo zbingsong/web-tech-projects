@@ -1,0 +1,103 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+body {
+  margin: auto;
+  max-width: fit-content;
+  text-align: center;
+}
+
+footer {
+  margin: 5px 0;
+}
+
+h1, h2, span {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 55px;
+  margin: 5px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+span {
+  font-style: italic;
+  font-size: small;
+}
+
+.footer-text-container {
+  padding: 26px 0;
+}
+
+.footer-text-container #footer-text {
+  font-size: xx-small;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+  margin: 0 11px;
+}
+
+.images {
+  display: grid;
+  gap: 8px;
+}
+
+.images #koala-img, .images #pier-img {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+.images #horses-img, .images #road-img {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+.images #geko-img, .images #lake-img {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+.images #shark-img, .images #mountain-img {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+.main-img {
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
+}
+
+.menu {
+  padding: 10px 90px;
+  margin: 5px 0;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.menu .current-page {
+  font-weight: 600;
+}
+
+.section-title {
+  text-align: left;
+  height: 40px;
+}
+
+.title {
+  margin: 40px auto 55px auto;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  width: 690px;
+}

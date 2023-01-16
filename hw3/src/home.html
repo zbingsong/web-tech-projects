@@ -2,12 +2,14 @@
 <html lang="en">
   <head>
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
+  
   <body>
     <div class="title">
       <h1>James Jantz</h1>
       <div class="menu">
-        <span>home</span>
+        <span class="current-page">home</span>
         <span><a href="./nature.html">nature</a></span>
         <span>urban</span>
         <span>videos</span>
@@ -16,15 +18,31 @@
         <span>book online</span>
       </div>
     </div>
-    <div class="images">
 
+    <div class="section-title">
     </div>
+
+    <div class="images">
+      <img class="main-img" id="pier-img" src="../assets/img/pier.jpg">
+      <img class="main-img" id="road-img" src="../assets/img/road.jpg">
+      <img class="main-img" id="lake-img" src="../assets/img/lake.jpg">
+      <img class="main-img" id="mountain-img" src="../assets/img/mountain.jpg">
+    </div>
+
     <footer>
-      <span class="footer-text">
-        &copy; 2023 by James Jantz
-      </span>
-      <div class="icons">
-        
+      <div class="footer-text-container">
+        <span id="footer-text">&copy; 2023 by James Jantz</span>
+      </div>
+      <div class="icon-container">
+        <a href="https://www.facebook.com/">
+          <img class="icon" src="../assets/icons/facebook.png">
+        </a>
+        <a href="https://twitter.com/">
+          <img class="icon" src="../assets/icons/twitter.png">
+        </a>
+        <a href="https://www.instagram.com/">
+          <img class="icon" src="../assets/icons/instagram.png">
+        </a>
       </div>
     </footer>
   </body>
