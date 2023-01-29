@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <title>
+      Hello
+    </title>
+  </head>
+
+  <body>
+    <div id="search">
+      <form id="search-form" onsubmit="searchEvents(event)">
+        <h1>Events Search</h1>
+        <hr>
+
+        <label>
+          Keyword<span class="required-input-asterisk">*</span>
+        </label>
+        <input type="text" name="keyword" required>
+
+        <label>Distance (miles)</label>
+        <input type="number" placeholder="10" name="distance">
+
+        <label>
+          Category<span class="required-input-asterisk">*</span>
+        </label>
+        <select name="category">
+          <option value="Music">Music</option>
+          <option value="Sports">Sports</option>
+          <option value="Arts">Arts</option>
+          <option value="Theatre">Theatre</option>
+          <option value="Film">Film</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+
+        <label>
+          Location<span class="required-input-asterisk">*</span>
+        </label>
+        <input type="checkbox" id="location-checkbox" name="locationCheckbox" onchange="toggleLocationInput(event)">
+        <label for="location-checkbox">Auto-Detect Location</label>
+        <input type="text" id="location-input" name="location">
+
+        <input type="submit" value="SEARCH">
+        <input type="button" value="CLEAR" onclick="clearForm(event)">
+      </form>
+    </div>
+
+    <div id="search-no-result">
+      <h2>No Records found</h2>
+    </div>
+
+    <div id="search-result">
+      <table id="search-result-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Icon</th>
+            <th>Event</th>
+            <th>Genre</th>
+            <th>Venue</th>
+          </tr>
+        </thead>
+
+        <tbody id="search-result-table-body">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="event-detail">
+      <h1 id="event-detail-title">
+      </h1>
+
+      <div id="event-detail-info">
+        <span>Date</span>
+        <span id="event-detail-date"></span>
+
+        <span>Artist/Team</span>
+        <span id="event-detail-artist"></span>
+
+        <span>Venue</span>
+        <span id="event-detail-venue"></span>
+
+        <span>Genres</span>
+        <span id="event-detail-genres"></span>
+
+        <span>Price Ranges</span>
+        <span id="event-detail-price"></span>
+
+        <span>Ticket Status</span>
+        <span id="event-detail-ticket-status"></span>
+
+        <span>Buy Ticket At:</span>
+        <span id="event-detail-buy-ticket">
+          <a id="event-detail-buy-ticket-anchor">Ticketmaster</a>
+        </span>
+      </div>
+
+      <div id="event-detail-seat">
+        <img>
+      </div>
+    </div>
+
+    <div id="show-venue">
+      <h2>Show Venue Details</h2>
+      &#8964;
+    </div>
+
+    <div id="venue-detail">
+      <h1 id="venue-detail-title">
+      </h1>
+
+      <div id="venue-detail-address">
+        <div>
+          <span id="venue-detail-address-header">Address:</span>
+          <span id="venue-detail-address-content"></span>
+        </div>
+        <div>
+          <a>Open in Google Maps</a>
+        </div>
+      </div>
+
+      <div id="venue-detail-more-events">
+        <a>More events at this venue</a>
+      </div>
+    </div>
+  </body>
+</html>
