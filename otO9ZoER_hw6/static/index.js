@@ -51,8 +51,6 @@ function showResults(results) {
       resultTableBody.removeChild(resultTableBody.firstChild);
     }
   } else {
-    document.getElementById('search-result').style.display = 'block';
-    document.getElementById('search-no-result').style.display = 'none';
     const resultTableBody = document.getElementById('search-result-table-body');
     for (const result of results) {
       const row = document.createElement('tr');
@@ -83,10 +81,13 @@ function showResults(results) {
       resultTableBody.append(row);
     }
   }
+  document.getElementById('search-result').style.display = 'block';
+  document.getElementById('search-no-result').style.display = 'none';
 }
 
 
 function showEventDetail(eventId) {
+  const event = null;
 
 }
 
