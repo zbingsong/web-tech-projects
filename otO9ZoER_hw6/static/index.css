@@ -2,10 +2,15 @@ body {
   background-image: url("./assets/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   height: 100vh;
   color: white;
 }
 
 #search > #search-form .required-input-asterisk {
   color: red;
+}
+
+#search-result > #search-result-table .search-result-event-icon {
+  height: 100px;
 }
