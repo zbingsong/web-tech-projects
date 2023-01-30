@@ -41,8 +41,9 @@ def get_venue_detail(venue_id: str):
 
 @app.get('/search')
 def search_events():
-  # params: ImmutableMultiDict[str, str] = request.args
-  params = {'keyword': 'usc', 'distance': 10, 'category': 'Default', 'lng': -118.2863, 'lat': 34.0030}
+  params: ImmutableMultiDict[str, str] = request.args
+  # params = {'keyword': 'usc', 'distance': 10, 'category': 'Default', 'lng': -118.2863, 'lat': 34.0030}
+  print(params)
   geo_hash: str = geohash.encode(params['lat'], params['lng'], 5)
   request_url: str = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey={0}&keyword={1}&geoPoint={2}&radius={3}&unit=miles{4}'\
     .format(
