@@ -1,3 +1,8 @@
+const IPINFO_API_KEY = '4c616ba7471362';
+const GOOGLE_GEOCODING_API_KEY = '';
+const TICKETMASTER_API_KEY = '';
+
+
 function searchEvents(event) {
   console.log('search button clicked');
   event.preventDefault();
@@ -16,7 +21,7 @@ function clearForm(event) {
   const formElems = document.getElementById('search-form').elements;
   formElems['keyword'].value = '';
   formElems['distance'].value = '';
-  formElems['category'].value = 'Music';
+  formElems['category'].value = 'Default';
   formElems['location-checkbox'].checked = false;
   formElems['location-input'].value = '';
   formElems['location-input'].style.display = 'block';
