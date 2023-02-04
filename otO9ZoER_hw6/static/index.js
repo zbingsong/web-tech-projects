@@ -23,7 +23,7 @@ async function searchEvents(event) {
     if (data.events === undefined) {
       throw new Error('Failure in retrieving events');
     }
-    showResults(data.events);
+    showEvents(data.events);
   } catch (error) {
     console.log(error);
     alert(JSON.stringify(error));
@@ -97,16 +97,11 @@ function toggleLocationInput(event) {
  *  venue: string
  * }>} results 
  */
-function showResults(results) {
+function showEvents(results) {
   if (!results || results.length === 0) {
     document.getElementById('search-no-result').style.display = 'block';
     document.getElementById('search-result').style.display = 'none';
-    // the following four lines are adapted from @Fernando and @Nathan's answer at: 
-    // https://stackoverflow.com/questions/50269658/how-to-delete-all-child-elements-from-a-div-element-using-js
-    const resultTableBody = document.getElementById('search-result-table-body');
-    while (resultTableBody.hasChildNodes()) {
-      resultTableBody.removeChild(resultTableBody.firstChild);
-    }
+    clearChildElements(document.getElementById('search-result-table-body'));
   } else {
     const resultTableBody = document.getElementById('search-result-table-body');
     for (const result of results) {
@@ -145,12 +140,84 @@ function showResults(results) {
 }
 
 
-function showEventDetail(eventId) {
-  const event = null;
+async function showEventDetail(eventId) {
+  try {
+    const response = await fetch(`/event/${eventId}`);
+    const data = await response.json();
+    /* shape of data: {
+        name: string, 
+        date: string (empty string if no date),
+        time: string (empty string if no time),
+        artist: Array<{ artist: string, url: string }> (array of objects),
+        genre: string,
+        venue_id: string (empty string if no venue),
+        venue: string (empty string if no venue),
+        price: string (empty string if no price),
+        status: string (one of 'On Sale', 'Off Sale', 'Canceled', 'Postponed', 'Rescheduled'),
+        status_color: string (one of 'red', 'green', 'orange', 'black')
+        buy: string (url link),
+        seatmap: string (image url),
+      }
+    */
+    document.getElementById('event-detail-title').innerHTML = data.name;
 
+    if (data.date === '') {
+      document.getElementById('event-detail-date').style.display = 'none';
+    } else {
+      document.getElementById('event-detail-date').style.display = 'block';
+      document.getElementById('event-detail-date-content').innerHTML = data.date + ' ' + data.time;
+    }
+
+    if (data.artist.length === 0) {
+      document.getElementById('event-detail-artist').style.display = 'none';
+      clearChildElements(document.getElementById('event-detail-artist-content'));
+    } else {
+      document.getElementById('event-detail-artist').style.display = 'block';
+      const artistList = document.getElementById('event-detail-artist-content');
+      for (let i = 0; i++; i < data.artist.length-1) {
+        const artistInfo = data.artist[i]
+        const artistLink = document.createElement('a');
+        artistLink.innerHTML = artistInfo.artist;
+        artistLink.href = artistInfo.url;
+        const separator = document.createElement('span');
+        separator.innerHTML = ' | ';
+        artistList.append(artistLink, separator);
+      }
+      const artistInfo = data.artist[data.artist.length-1]
+      const artistLink = document.createElement('a');
+      artistLink.innerHTML = artistInfo.artist;
+      artistLink.href = artistInfo.url;
+      artistList.append(artistLink);
+    }
+
+    if (data.venue === '') {
+      document.getElementById('event-detail-venue').style.display = 'none';
+    } else {
+      document.getElementById('event-detail-venue').style.display = 'block';
+      document.getElementById('event-detail-venue-content').innerHTML = data.venue;
+    }
+
+    if (data.genre === '') {
+      document.getElementById('event-detail-genres').style.display = 'none';
+    } else {
+      document.getElementById('event-detail-genres').style.display = 'block';
+      document.getElementById('event-detail-genres-content').innerHTML = data.genre;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
 function showVenueDetail(venueId) {
 
+}
+
+
+// adapted from @Fernando and @Nathan's answer at: 
+// https://stackoverflow.com/questions/50269658/how-to-delete-all-child-elements-from-a-div-element-using-js
+function clearChildElements(parentElement) {
+  while (parentElement.hasChildNodes()) {
+    parentElement.removeChild(parentElement.firstChild);
+  }
 }
