@@ -14,7 +14,8 @@ CATEGORY_OPTIONS: Final[dict[str, str]] = {
   'Miscellaneous': '&segmentId=KZFzniwnSyZfZ7v7n1',
 }
 
-TICKET_STATUS: Final[dict[str, Tuple(str, str)]] = {
+TICKET_STATUS: Final[dict[str, Tuple[str, str]]] = {
+  'none': ('', 'black'),
   'onsale': ('On Sale', 'green'), 
   'offsale': ('Off Sale', 'red'), 
   'canceled': ('Canceled', 'black'), 
@@ -102,8 +103,8 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
     'venue_id': '',
     'venue': '',
     'price': '',
-    'status': TICKET_STATUS[event_json['dates']['status']['code']][0],
-    'status_color': TICKET_STATUS[event_json['dates']['status']['code']][1],
+    'status': TICKET_STATUS[event_json['dates']['status'].get('code', 'none')][0],
+    'status_color': TICKET_STATUS[event_json['dates']['status'].get('code', 'none')][1],
     'buy': event_json['url'],
     'seatmap': event_json.get('seatmap', dict()).get('staticUrl', '')
   }
