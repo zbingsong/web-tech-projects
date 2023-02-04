@@ -50,7 +50,8 @@ class EventDetailDict(TypedDict):
 class VenueDetailDict(TypedDict):
   name: str
   address: list[str]
-  city_state: str
+  city: str
+  state: str
   postal: str
   upcoming: str
 
@@ -153,14 +154,12 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
 
 def extract_venue_detail(venue_json: dict) -> dict:
   venue_detail: VenueDetailDict = {
-    'name': venue_json.get('name', 'N/A'),
+    'name': venue_json.get('name', ''),
     'address': [],
-    'city_state': ', '.join(
-      venue_json.get('city', dict()).get('name', 'N/A'), 
-      venue_json.get('state', dict()).get('stateCode', 'N/A')
-    ),
-    'postal': venue_json.get('postalCode', 'N/A'),
-    'upcoming': venue_json.get('url', 'N/A')
+    'city': venue_json.get('city', dict()).get('name', ''), 
+    'state': venue_json.get('state', dict()).get('stateCode', ''),
+    'postal': venue_json.get('postalCode', ''),
+    'upcoming': venue_json.get('url', '')
   }
   if 'line1' in venue_json['address']:
     venue_detail['address'].append(venue_json['address']['line1'])

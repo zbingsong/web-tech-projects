@@ -1,6 +1,5 @@
 const IPINFO_API_KEY = '4c616ba7471362';
 const GOOGLE_GEOCODING_API_KEY = 'AIzaSyAzeFEsfPKDhdxHcwYkDuDirDo4IAifTfk';
-const TICKETMASTER_API_KEY = 'kokaaLQxqCux3XHdGCnVGD2zh6mODd2r';
 
 
 async function searchEvents(event) {
@@ -86,7 +85,6 @@ function toggleLocationInput(event) {
 
 
 /**
- * 
  * @param {Array<{
  *  id: string, 
  *  date: string, 
@@ -144,7 +142,8 @@ async function showEventDetail(eventId) {
   try {
     const response = await fetch(`/event/${eventId}`);
     const data = await response.json();
-    /* shape of data: {
+    /* 
+      shape of data: {
         name: string, 
         date: string (empty string if no date),
         time: string (empty string if no time),
@@ -159,6 +158,10 @@ async function showEventDetail(eventId) {
         seatmap: string (image url),
       }
     */
+    document.getElementById('event-detail').style.display = 'block';
+    document.getElementById('show-venue').style.display = 'block';
+    document.getElementById('show-venue-arrow').onclick = showVenueDetail(data.venue_id);
+
     document.getElementById('event-detail-title').innerHTML = data.name;
 
     if (data.date === '') {
@@ -209,8 +212,56 @@ async function showEventDetail(eventId) {
 }
 
 
-function showVenueDetail(venueId) {
+async function showVenueDetail(venueId) {
+  if (!venueId) {
+    return;
+  }
 
+  try {
+    const response = await fetch(`/venue/${venueId}`);
+    const data = await response.json();
+    /* 
+      shape of data: {
+        name: string,
+        address: Array<string>,
+        city: string,
+        state: string,
+        postal: string,
+        upcoming: string (url),
+      }
+      all keys are guaranteed to appear
+      if no entry in a key, the value is an empty string (except for address)
+    */
+    // show venue info, hides 'show venue' button
+    document.getElementById('venue-detail').style.display = 'block';
+    document.getElementById('show-venue').style.display = 'none';
+
+    document.getElementById('venue-detail-title').innerHTML = data.name || 'N/A';
+    
+    const venueAddrContent = document.getElementById('venue-detail-address-content');
+    data.address.forEach(line => {
+      const addrLine = document.createElement('p');
+      addrLine.innerHTML = line;
+      venueAddrContent.append(addrLine);
+    });
+    
+    const addrCityState = document.createElement('p');
+    addrCityState.innerHTML = `${data.city || 'N/A'}, ${data.state || 'N/A'}`;
+    const addrPostal = document.createElement('p');
+    addrPostal.innerHTML = data.postal || 'N/A';
+    venueAddrContent.append(addrCityState, addrPostal);
+
+    const mapSearchLink = 
+      `https://www.google.com/maps/search/?api=1&query=${data.address.join('+').replaceAll(' ', '+')}`
+      + (data.city ? `+${data.city}` : '')
+      + (data.state ? `+${data.state}` : '') 
+      + (data.postal ? `+${data.postal}` : '');
+    document.getElementById('venue-detail-map-anchor').href = mapSearchLink;
+
+    document.getElementById('venue-detail-more-anchor').href = data.upcoming;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
