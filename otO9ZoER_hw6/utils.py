@@ -9,7 +9,6 @@ CATEGORY_OPTIONS: Final[dict[str, str]] = {
   'Music': '&segmentId=KZFzniwnSyZfZ7v7nJ',
   'Sports': '&segmentId=KZFzniwnSyZfZ7v7nE',
   'Arts': '&segmentId=KZFzniwnSyZfZ7v7na',
-  'Theatre': '&segmentId=KZFzniwnSyZfZ7v7na',
   'Film': '&segmentId=KZFzniwnSyZfZ7v7nn',
   'Miscellaneous': '&segmentId=KZFzniwnSyZfZ7v7n1',
 }
