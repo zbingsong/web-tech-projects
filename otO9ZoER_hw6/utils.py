@@ -50,6 +50,7 @@ class EventDetailDict(TypedDict):
 
 class VenueDetailDict(TypedDict):
   name: str
+  icon: str
   address: list[str]
   city: str
   state: str
@@ -118,7 +119,7 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
   event_detail['artist'] = list(
     map(
       lambda attraction: {'artist': attraction['name'], 'url': attraction.get('url', '')}, 
-      event_json['_embedded']['attractions']
+      event_json['_embedded'].get('attractions', [])
     )
   )
   # genre
@@ -156,12 +157,17 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
 def extract_venue_detail(venue_json: dict) -> dict:
   venue_detail: VenueDetailDict = {
     'name': venue_json.get('name', ''),
+    'icon': '',
     'address': [],
     'city': venue_json.get('city', dict()).get('name', ''), 
     'state': venue_json.get('state', dict()).get('stateCode', ''),
     'postal': venue_json.get('postalCode', ''),
     'upcoming': venue_json.get('url', '')
   }
+  # icon
+  if len(venue_json.get('images', [])) > 0:
+    venue_detail['icon'] = venue_json['images'][0]['url']
+  # address
   if 'line1' in venue_json['address']:
     venue_detail['address'].append(venue_json['address']['line1'])
     if 'line2' in venue_json['address']:
