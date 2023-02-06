@@ -324,63 +324,56 @@ a {
   display: grid;
   row-gap: 5px;
   column-gap: 10px;
-  padding: 0 20px;
-  grid-template-columns: 50% 50%;
+  padding: 10px 30px 25px 30px;
+  grid-template-columns: 14% 34% 52%;
   border-width: 1px;
   border-style: solid;
   border-color: black;
   border-radius: 15px;
+  width: max-content;
+  min-width: 570px;
 }
 
 #venue-detail > #venue-detail-inner > #venue-detail-title {
   grid-row: 1 / 2;
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   font-size: 20px;
   /* css of underline from https://stackoverflow.com/questions/71867316/use-max-content-in-calc */
   border-bottom: 1px solid black;
   width: max-content;
-  min-width: 200px;
-  margin: 10px auto;
+  margin: 0 auto 30px auto;
   padding-inline: 10px;
 }
 
-#venue-detail > #venue-detail-inner > #venue-detail-address {
+#venue-detail > #venue-detail-inner > #venue-detail-address-header {
   grid-row: 2 / 3;
-  grid-column: 1 / 2;
-  display: grid;
-  grid-template-columns: 40% 60%;
-  column-gap: 7px;
-  margin: 20px 0;
-  padding: 10px 0;
-  border-right: 1px solid black;
-}
-
-#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-header {
-  grid-row: 1 / 2;
   grid-column: 1 / 2;
   text-align: right;
   font-weight: bold;
+  padding-top: 10px;
 }
 
-#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-content {
-  grid-row: 1 / 2;
-  grid-column: 2 / 3;
-}
-
-#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-content p {
-  margin: 0 0 2px 0;
-}
-
-#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-map {
+#venue-detail > #venue-detail-inner > #venue-detail-address-content {
   grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  padding-top: 10px;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address-content p {
+  margin: 0 0 1px 0;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-map {
+  grid-row: 3 / 4;
   grid-column: 1 / 3;
   text-align: center;
-  margin-top: 10px;
+  padding: 10px 0;
 }
 
 #venue-detail > #venue-detail-inner > #venue-detail-more {
-  grid-row: 2 / 3;
-  grid-column: 2 / 3;
-  margin: 20px 0;
+  grid-row: 2 / 4;
+  grid-column: 3 / 4;
   text-align: center;
+  border-left: 1px solid black;
+  padding-top: 10px;
 }
