@@ -126,17 +126,17 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
   if len(event_json['classifications']) > 0:
     classification: dict = event_json['classifications'][0]
     genre_list: list[str] = []
-    if 'segment' in classification:
+    if 'segment' in classification and classification['segment']['name'].lower() != 'undefined':
       genre_list.append(classification['segment']['name'])
-    if 'genre' in classification:
+    if 'genre' in classification and classification['genre']['name'].lower() != 'undefined':
       genre_list.append(classification['genre']['name'])
-    if 'subGenre' in classification:
+    if 'subGenre' in classification and classification['subGenre']['name'].lower() != 'undefined':
       genre_list.append(classification['subGenre']['name'])
-    if 'type' in classification:
+    if 'type' in classification and classification['type']['name'].lower() != 'undefined':
       genre_list.append(classification['type']['name'])
-    if 'subType' in classification:
+    if 'subType' in classification and classification['subType']['name'].lower() != 'undefined':
       genre_list.append(classification['subType']['name'])
-    event_detail['genre'] = ' / '.join(genre_list)
+    event_detail['genre'] = ' | '.join(genre_list)
   # venue
   if len(event_json['_embedded'].get('venues', [])) > 0:
     venue: dict = event_json['_embedded']['venues'][0]
