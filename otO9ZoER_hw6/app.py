@@ -12,6 +12,7 @@ app: Final[Flask] = Flask(__name__)
 
 # APIs to serve HTML and static resources
 @app.get('/')
+@app.get('/index')
 def index() -> Response:
   return send_from_directory('static', 'index.html')
 
