@@ -3,52 +3,384 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  height: 100vh;
-  margin: auto;
-  max-width: fit-content;
-  text-align: center;
+  margin: 30px 0;
 }
 
+label {
+  color: rgb(89, 196, 248);
+}
+
+input {
+  color: white;
+}
+
+a {
+  color: rgb(89, 196, 248);
+  text-decoration: none;
+}
+
+/* ############################ search form ############################### */
 #search {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px 25px;
+  display: grid;
+  width: 560px;
+  /* height: 400px; */
+  margin: 0 auto;
+}
+
+#search > #search-form {
+  display: grid;
+  text-align: left;
+  grid-template-columns: 50% 50%;
+  row-gap: 10px;
+}
+
+#search > #search-form > #search-form-title {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  border-bottom: 1px solid white;
+  color: white;
+  text-align: center;
+  font-family: serif;
+  font-weight: 100;
+  font-size: 40px;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  letter-spacing: -1px;
+}
+
+#search > #search-form > #search-form-keyword {
+  grid-row: 2 / 3;
+  grid-column: 1 / 3;
+}
+
+#search > #search-form > #search-form-keyword > input {
+  width: 540px;
+}
+
+#search > #search-form > #search-form-distance {
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+}
+
+#search > #search-form > #search-form-category {
+  grid-row: 3 / 4;
+  grid-column: 2 / 3;
+}
+
+#search > #search-form > #search-form-category select {
+  width: 280px;
+}
+
+#search > #search-form > #search-form-category option {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#search > #search-form > #search-form-location {
+  grid-row: 4 / 5;
+  grid-column: 1 / 3;
+}
+
+#search > #search-form > #search-form-location label {
+  display: inline;
+}
+
+#search > #search-form > #search-form-location > #search-form-location-title {
+  margin-bottom: 10px;
+}
+
+#search > #search-form > #search-form-location > #search-form-location-title > label[for='location-checkbox'] {
+  color: rgb(191, 191, 191);
+}
+
+#search > #search-form > #search-form-location > #search-form-location-title > input {
+  vertical-align: text-bottom;
+}
+
+#search > #search-form > #search-form-location > input[type='text'] {
+  width: 540px;
+}
+
+#search > #search-form > #search-form-button {
+  grid-row: 5 / 6;
+  grid-column: 1 / 3;
+  margin: 20px 0 15px 0;
+}
+
+#search > #search-form > #search-form-button input {
+  padding: 15px 25px;
   border-radius: 10px;
+  border-width: 0;
+}
+
+#search > #search-form > #search-form-button > #search-form-button-submit {
+  background-color: rgb(237, 116, 47);
+  box-shadow: 0 5px rgb(232, 88, 39);
+  margin-right: 5px;
+}
+
+#search > #search-form > #search-form-button > #search-form-button-clear {
+  background-color: rgb(86, 109, 167);
+  box-shadow: 0 5px rgb(60, 76, 117);
+}
+
+#search > #search-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+#search > #search-form input[type='text'], #search > #search-form input[type='number'], #search > #search-form select {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border-color: white;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 #search > #search-form .required-input-asterisk {
   color: red;
 }
 
-#search-result table, #search-result th, #search-result td {
+/* ############################ search no result ############################### */
+#search-no-result {
+  background-color: white;
+  color: rgb(233, 50, 34);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px 0;
+  width: 90%;
+  margin: 50px auto;
+  text-align: center;
+}
+
+/* ############################ search result table ############################### */
+#search-result {
+  width: 90%;
+  min-width: 600px;
+  margin: 20px auto;
+}
+
+#search-result > table {
+  width: 100%;
+  background-color: white;
+  font-size: 14px;
+}
+
+#search-result > table, #search-result th, #search-result td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
-#search-result > #search-result-table {
-  background-color: white;
+#search-result > table > thead {
+  box-shadow: 0px 1px 10px 1px grey;
 }
 
-#search-result > #search-result-table thead {
-  box-shadow: 0px 2px 13px 3px grey;
+#search-result > table > thead th {
+  padding: 15px 20px;
 }
 
-#search-result > #search-result-table .search-result-event-icon {
-  height: 100px;
+#search-result > table > thead .table-date {
+  width: 15%;
 }
 
-#search-no-result {
-  background-color: lightcoral;
+#search-result > table > thead .table-icon {
+  width: 15%;
 }
 
+#search-result > table > thead .table-event {
+  width: 40%;
+}
+
+#search-result > table > thead .table-genre {
+  width: 10%;
+}
+
+#search-result > table > thead .table-venue {
+  width: 20%;
+}
+
+#search-result > table > tbody td {
+  padding: 15px 20px;
+  text-align: center;
+  word-wrap: normal;
+}
+
+#search-result > table > tbody td p {
+  margin: 0;
+}
+
+#search-result > table .search-result-event-icon {
+  width: 100px;
+}
+
+/* ############################ event detail ############################### */
 #event-detail {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
+  display: grid;
+  row-gap: 20px;
+  grid-template-columns: 40% 60%;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px 35px;
+  width: 700px;
+  margin: 15px auto;
 }
 
-#show-venue {
+#event-detail > #event-detail-title {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  word-wrap: normal;
   color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  font-family: sans-serif;
+  margin: 10px;
 }
 
+#event-detail > #event-detail-info {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+#event-detail > #event-detail-info .event-detail-info-item {
+  margin: 12px 0;
+}
+
+#event-detail > #event-detail-info .event-detail-label {
+  color: rgb(152, 242, 222);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+#event-detail > #event-detail-info .event-detail-content {
+  color: white;
+  font-size: 12px;
+  margin: 0;
+}
+
+#event-detail > #event-detail-info > #event-detail-status #event-detail-status-content {
+  border-radius: 5px;
+  background-color: green;
+  padding: 4px 8px;
+}
+
+#event-detail > #event-detail-seat {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#event-detail > #event-detail-seat > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ############################ load venue info ############################### */
+#show-venue {
+  text-align: center;
+  margin: 10px auto;
+  color: rgba(223, 223, 223, 0.85);
+}
+
+#show-venue > #show-venue-text {
+  font-size: 20px;
+  letter-spacing: -1px;
+  margin: 0 auto;
+}
+
+#show-venue > #show-venue-arrow {
+  font-size: 28px;
+  font-family: serif;
+  font-weight: 100;
+  color: rgba(214, 214, 214, 0.8);
+  margin: -5px auto 0 auto;
+  width: 50px;
+  transform: rotate(-45deg);
+}
+
+/* ############################ venue detail ############################### */
 #venue-detail {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
+  width: max-content;
+  margin: 20px auto 0 auto;
+  padding: 10px;
+}
+
+#venue-detail > #venue-detail-inner {
+  display: grid;
+  row-gap: 5px;
+  column-gap: 10px;
+  padding: 0 20px;
+  grid-template-columns: 50% 50%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 15px;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-title {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  font-size: 20px;
+  /* css of underline from https://stackoverflow.com/questions/71867316/use-max-content-in-calc */
+  border-bottom: 1px solid black;
+  width: max-content;
+  min-width: 200px;
+  margin: 10px auto;
+  padding-inline: 10px;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  column-gap: 7px;
+  margin: 20px 0;
+  padding: 10px 0;
+  border-right: 1px solid black;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-header {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  text-align: right;
+  font-weight: bold;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-content {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-address-content p {
+  margin: 0 0 2px 0;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-address > #venue-detail-map {
+  grid-row: 2 / 3;
+  grid-column: 1 / 3;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#venue-detail > #venue-detail-inner > #venue-detail-more {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  margin: 20px 0;
+  text-align: center;
 }

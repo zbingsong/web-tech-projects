@@ -144,7 +144,7 @@ def extract_event_detail(event_json: dict) -> EventDetailDict:
   # price
   if 'priceRanges' in event_json:
     price_range: dict = event_json['priceRanges'][0]
-    event_detail['price'] = '{0}-{1} {2}'.format(
+    event_detail['price'] = '{0} - {1} {2}'.format(
       price_range['min'], 
       price_range['max'],
       price_range['currency'],
