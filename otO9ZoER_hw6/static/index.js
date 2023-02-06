@@ -2,6 +2,20 @@ const IPINFO_API_KEY = '4c616ba7471362';
 const GOOGLE_GEOCODING_API_KEY = 'AIzaSyAzeFEsfPKDhdxHcwYkDuDirDo4IAifTfk';
 
 
+// clears out checkbox when using Back button on browser
+window.onload = () => {
+  // console.log('page loaded');
+  document.getElementById('location-checkbox').checked = false;
+}
+
+
+function toggleLocationInput(event) {
+  const locationInput = document.getElementById('location-input');
+  locationInput.style.display = event.target.checked ? 'none' : 'initial';
+  locationInput.required = !event.target.checked;
+}
+
+
 async function searchEvents(event) {
   // console.log('search button clicked');
   event.preventDefault();
@@ -11,7 +25,6 @@ async function searchEvents(event) {
     formData.get('distance') === '' ? 10 : parseInt(formData.get('distance'));
   const category = formData.get('category');
   const location = await getLocation(formData);
-  // console.log(`${keyword}, ${distance}, ${category}, ${formData.get('location-checkbox')}, ${JSON.stringify(location)}`);
 
   try {
     const response = await fetch(
@@ -25,7 +38,6 @@ async function searchEvents(event) {
     showEvents(data.events);
   } catch (error) {
     console.log(error);
-    alert(JSON.stringify(error));
   }
 }
 
@@ -38,8 +50,14 @@ function clearForm(event) {
   formElems['category'].value = 'Default';
   formElems['location-checkbox'].checked = false;
   formElems['location-input'].value = '';
-  formElems['location-input'].style.display = '';
+  formElems['location-input'].style.display = 'initial';
   formElems['location-input'].required = false;
+
+  document.getElementById('search-no-result').style.display = 'none';
+  document.getElementById('search-result').style.display = 'none';
+  document.getElementById('event-detail').style.display = 'none';
+  document.getElementById('show-venue').style.display = 'none';
+  document.getElementById('venue-detail').style.display = 'none';
 }
 
 
@@ -55,7 +73,6 @@ async function getLocation(formData) {
       coordinates.lng = parseFloat(coordArr[1]);
     } catch (error) {
       console.log('location error');
-      alert(JSON.stringify(error));
     }
   } else {
     // console.log('google geocoding');
@@ -70,17 +87,9 @@ async function getLocation(formData) {
       coordinates.lng = coordObj.lng;
     } catch (error) {
       console.log('location error');
-      alert(JSON.stringify(error));
     }
   }
   return coordinates;
-}
-
-
-function toggleLocationInput(event) {
-  const locationInput = document.getElementById('location-input');
-  locationInput.style.display = event.target.checked ? 'none' : '';
-  locationInput.required = !event.target.checked;
 }
 
 
@@ -96,45 +105,55 @@ function toggleLocationInput(event) {
  * }>} results 
  */
 function showEvents(results) {
+  clearChildElements(document.getElementById('search-result-table-body'));
   if (!results || results.length === 0) {
-    document.getElementById('search-no-result').style.display = '';
+    document.getElementById('search-no-result').style.display = 'block';
     document.getElementById('search-result').style.display = 'none';
-    clearChildElements(document.getElementById('search-result-table-body'));
   } else {
+    // console.log('showing results');
     const resultTableBody = document.getElementById('search-result-table-body');
     for (const result of results) {
+      // console.log('result');
       const row = document.createElement('tr');
 
-      const date = document.createElement('th');
-      // date.dataset.eventId = result.id;
+      const date = document.createElement('td');
+      date.className = 'table-date';
       const dateText = document.createElement('p');
       dateText.innerHTML = result.date;
       const timeText = document.createElement('p');
       timeText.innerHTML = result.time;
       date.append(dateText, timeText);
 
-      const icon = document.createElement('th');
+      const icon = document.createElement('td');
+      icon.className = 'table-icon';
       const iconImg = document.createElement('img');
       iconImg.src = result.image_url;
       iconImg.className = 'search-result-event-icon';
       icon.append(iconImg);
 
-      const event = document.createElement('th');
-      event.innerHTML = result.name;
-      event.onclick = () => showEventDetail(result.id);
+      const event = document.createElement('td');
+      event.className = 'table-event';
+      const eventText = document.createElement('span');
+      eventText.innerHTML = result.name;
+      eventText.className = 'table-event-text';
+      eventText.onclick = () => showEventDetail(result.id);
+      event.append(eventText);
 
-      const genre = document.createElement('th');
+      const genre = document.createElement('td');
+      genre.className = 'table-genre';
       genre.innerHTML = result.genre;
 
-      const venue = document.createElement('th');
+      const venue = document.createElement('td');
+      venue.className = 'table-venue';
       venue.innerHTML = result.venue;
 
       row.append(date, icon, event, genre, venue);
       resultTableBody.append(row);
     }
+    document.getElementById('search-result').style.display = 'block';
+    document.getElementById('search-no-result').style.display = 'none';
+    // console.log('table should be shown');
   }
-  document.getElementById('search-result').style.display = '';
-  document.getElementById('search-no-result').style.display = 'none';
 }
 
 
@@ -161,9 +180,10 @@ async function showEventDetail(eventId) {
         seatmap: string (image url),
       }
     */
-    document.getElementById('event-detail').style.display = '';
-    document.getElementById('show-venue').style.display = '';
+    document.getElementById('event-detail').style.display = 'grid';
+    document.getElementById('show-venue').style.display = 'block';
     document.getElementById('show-venue-arrow').onclick = () => showVenueDetail(detail.venue_id);
+    document.getElementById('venue-detail').style.display = 'none';
     
     // name
     document.getElementById('event-detail-title').innerHTML = detail.name;
@@ -175,53 +195,61 @@ async function showEventDetail(eventId) {
       document.getElementById('event-detail-date-content').innerHTML = `${detail.date} ${detail.time}`;
     }
     // artist
+    clearChildElements(document.getElementById('event-detail-artist-content'));
     if (detail.artist.length === 0) {
       document.getElementById('event-detail-artist').style.display = 'none';
-      clearChildElements(document.getElementById('event-detail-artist-content'));
     } else {
-      document.getElementById('event-detail-artist').style.display = '';
+      document.getElementById('event-detail-artist').style.display = 'block';
       const artistList = document.getElementById('event-detail-artist-content');
       for (let i = 0; i++; i < detail.artist.length-1) {
         const artistInfo = detail.artist[i]
+
         const artistLink = document.createElement('a');
         artistLink.innerHTML = artistInfo.artist;
         artistLink.href = artistInfo.url;
+        // https://stackoverflow.com/questions/15551779/open-link-in-new-tab-or-window
+        artistLink.target = '_blank';
+        artistLink.rel = 'noopener noreferrer';
+
         const separator = document.createElement('span');
         separator.innerHTML = ' | ';
+
         artistList.append(artistLink, separator);
       }
       const artistInfo = detail.artist[detail.artist.length-1]
       const artistLink = document.createElement('a');
       artistLink.innerHTML = artistInfo.artist;
       artistLink.href = artistInfo.url;
+      artistLink.target = '_blank';
+      artistLink.rel = 'noopener noreferrer';
       artistList.append(artistLink);
     }
     // venue
     if (detail.venue === '') {
       document.getElementById('event-detail-venue').style.display = 'none';
     } else {
-      document.getElementById('event-detail-venue').style.display = '';
+      document.getElementById('event-detail-venue').style.display = 'block';
       document.getElementById('event-detail-venue-content').innerHTML = detail.venue;
     }
     // genre
     if (detail.genre === '') {
       document.getElementById('event-detail-genres').style.display = 'none';
     } else {
-      document.getElementById('event-detail-genres').style.display = '';
+      document.getElementById('event-detail-genres').style.display = 'block';
       document.getElementById('event-detail-genres-content').innerHTML = detail.genre;
     }
     // price
     if (detail.price === '') {
       document.getElementById('event-detail-price').style.display = 'none';
     } else {
-      document.getElementById('event-detail-price').style.display = '';
+      document.getElementById('event-detail-price').style.display = 'block';
       document.getElementById('event-detail-price-content').innerHTML = detail.price;
     }
     // status
     if (detail.status === '') {
       document.getElementById('event-detail-status').style.display = 'none';
     } else {
-      document.getElementById('event-detail-status').style.display = '';
+      document.getElementById('event-detail-status').style.display = 'block';
       const statusContent = document.getElementById('event-detail-status-content');
       statusContent.innerHTML = detail.status;
       statusContent.style.backgroundColor = detail.status_color;
@@ -230,11 +258,14 @@ async function showEventDetail(eventId) {
     if (detail.buy === '') {
       document.getElementById('event-detail-buy').style.display = 'none';
     } else {
-      document.getElementById('event-detail-buy').style.display = '';
+      document.getElementById('event-detail-buy').style.display = 'block';
       document.getElementById('event-detail-buy-content-anchor').href = detail.buy;
     }
     // seatmap
     document.getElementById('event-detail-seat-img').src = detail.seatmap;
+
+    // scroll to bottom
+    window.scrollTo(0, document.body.scrollHeight);
   } catch (error) {
     console.log(error);
   }
@@ -253,6 +284,7 @@ async function showVenueDetail(venueId) {
     /* 
       shape of data: {
         name: string,
+        icon: string (url),
         address: Array<string>,
         city: string,
         state: string,
@@ -263,24 +295,28 @@ async function showVenueDetail(venueId) {
       if no entry in a key, the value is an empty string (except for address)
     */
     // show venue info, hides 'show venue' button
-    document.getElementById('venue-detail').style.display = '';
+    document.getElementById('venue-detail').style.display = 'block';
     document.getElementById('show-venue').style.display = 'none';
 
+    // name
     document.getElementById('venue-detail-title').innerHTML = detail.name || 'N/A';
-    
+    // icon
+    document.getElementById('venue-detail-icon-img').src = detail.icon;
+    // address
     const venueAddrContent = document.getElementById('venue-detail-address-content');
+    clearChildElements(venueAddrContent);
     detail.address.forEach(line => {
       const addrLine = document.createElement('p');
       addrLine.innerHTML = line;
       venueAddrContent.append(addrLine);
     });
-    
+    // city and state
     const addrCityState = document.createElement('p');
     addrCityState.innerHTML = `${detail.city || 'N/A'}, ${detail.state || 'N/A'}`;
     const addrPostal = document.createElement('p');
     addrPostal.innerHTML = detail.postal || 'N/A';
     venueAddrContent.append(addrCityState, addrPostal);
-
+    // map link
     const mapSearchLink = 
       `https://www.google.com/maps/search/?api=1&query=${detail.name.replaceAll(' ', '+')}`
       + detail.address.join('+').replaceAll(' ', '+')
@@ -288,8 +324,11 @@ async function showVenueDetail(venueId) {
       + (detail.state ? `+${detail.state}` : '') 
       + (detail.postal ? `+${detail.postal}` : '');
     document.getElementById('venue-detail-map-anchor').href = mapSearchLink;
-
+    // upcoming events link
     document.getElementById('venue-detail-more-anchor').href = detail.upcoming;
+
+    // scroll to bottom
+    window.scrollTo(0, document.body.scrollHeight);
   } catch (error) {
     console.log(error);
   }
@@ -302,4 +341,23 @@ function clearChildElements(parentElement) {
   while (parentElement.hasChildNodes()) {
     parentElement.removeChild(parentElement.firstChild);
   }
+}
+
+// https://stackoverflow.com/questions/14267781/sorting-html-table-with-javascript
+let ascending = 1;
+
+function compareFuncGen(colClass) {
+  return function compareFunc(row1, row2) {
+    const cell1 = row1.querySelector(`.${colClass}`).innerHTML;
+    const cell2 = row2.querySelector(`.${colClass}`).innerHTML;
+    return ascending * cell1.localeCompare(cell2);
+  }
+}
+
+function sortTable(event) {
+  const tbody = document.getElementById('search-result-table-body');
+  Array.from(tbody.querySelectorAll('tr'))
+    .sort(compareFuncGen(event.target.className))
+    .forEach(row => tbody.appendChild(row));
+  ascending = -ascending;
 }

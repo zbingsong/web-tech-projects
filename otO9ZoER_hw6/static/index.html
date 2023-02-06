@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="./index.css">
     <script src="./index.js"></script>
     <title>
-      Event Search
+      Events Search
     </title>
   </head>
 
@@ -36,8 +36,7 @@
             <option value="Default">Default</option>
             <option value="Music">Music</option>
             <option value="Sports">Sports</option>
-            <option value="Arts">Arts</option>
-            <option value="Theatre">Theatre</option>
+            <option value="Arts">Arts & Theatre</option>
             <option value="Film">Film</option>
             <option value="Miscellaneous">Miscellaneous</option>
           </select>
@@ -69,82 +68,61 @@
       <table id="search-result-table">
         <thead>
           <tr>
-            <th class="table-date">Date</th>
+            <th class="table-date" onclick="sortTable(event)">Date</th>
             <th class="table-icon">Icon</th>
-            <th class="table-event">Event</th>
-            <th class="table-genre">Genre</th>
-            <th class="table-venue">Venue</th>
+            <th class="table-event" onclick="sortTable(event)">Event</th>
+            <th class="table-genre" onclick="sortTable(event)">Genre</th>
+            <th class="table-venue" onclick="sortTable(event)">Venue</th>
           </tr>
         </thead>
 
         <tbody id="search-result-table-body">
-          <!-- testing -->
-          <tr>
-            <td>
-              <p>2023-02-05</p>
-              <p>19:00:00</p>
-            </td>
-            <td>
-              <img class="search-result-event-icon" src="./assets/background.jpg">
-            </td>
-            <td>
-              Our Planet Live in Concert
-            </td>
-            <td>
-              Arts & Theatre
-            </td>
-            <td>
-              The Wiltern
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
 
     <div id="event-detail">
       <p id="event-detail-title">
-        The Batman in Concert
       </p>
 
       <div id="event-detail-info">
         <div class="event-detail-info-item" id="event-detail-date">
           <p class="event-detail-label">Date</p>
-          <p class="event-detail-content" id="event-detail-date-content">2023-03-16 20:00:00</p>
+          <p class="event-detail-content" id="event-detail-date-content"></p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-artist">
           <p class="event-detail-label">Artist/Team</p>
           <p class="event-detail-content" id="event-detail-artist-content">
-            <a href="index.html">The Batman</a>
           </p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-venue">
           <p class="event-detail-label">Venue</p>
-          <p class="event-detail-content" id="event-detail-venue-content">Dolby Theatre</p>
+          <p class="event-detail-content" id="event-detail-venue-content"></p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-genres">
           <p class="event-detail-label">Genres</p>
-          <p class="event-detail-content" id="event-detail-genres-content">Film | Action/Adventure | Action/Adventure</p>
+          <p class="event-detail-content" id="event-detail-genres-content"></p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-price">
           <p class="event-detail-label">Price Ranges</p>
-          <p class="event-detail-content" id="event-detail-price-content">40 - 115 USD</p>
+          <p class="event-detail-content" id="event-detail-price-content"></p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-status">
           <p class="event-detail-label">Ticket Status</p>
           <p class="event-detail-content">
-            <span id="event-detail-status-content">On Sale</span>
+            <span id="event-detail-status-content"></span>
           </p>
         </div>
         
         <div class="event-detail-info-item" id="event-detail-buy">
           <p class="event-detail-label">Buy Ticket At:</p>
           <p class="event-detail-content" id="event-detail-buy-content">
-            <a id="event-detail-buy-content-anchor" href="index.html">Ticketmaster</a>
+            <a target="_blank" rel="noopener noreferrer" id="event-detail-buy-content-anchor">Ticketmaster</a>
           </p>
         </div>
       </div>
@@ -162,23 +140,23 @@
     <div id="venue-detail">
       <div id="venue-detail-inner">
         <p id="venue-detail-title">
-          Walt Disney Concert Hall
         </p>
+
+        <div id="venue-detail-icon">
+          <img id="venue-detail-icon-img">
+        </div>
   
         <div id="venue-detail-address-header">
           Address:
         </div>
         <div id="venue-detail-address-content">
-          <p>111 South Grand Avenue</p>
-          <p>Los Angeles, CA</p>
-          <p>90012</p>
         </div>
         <div id="venue-detail-map">
-          <a id="venue-detail-map-anchor" href="index.html">Open in Google Maps</a>
+          <a id="venue-detail-map-anchor" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
         </div>
   
         <div id="venue-detail-more">
-          <a id="venue-detail-more-anchor" href="index.html">More events at this venue</a>
+          <a id="venue-detail-more-anchor" target="_blank" rel="noopener noreferrer">More events at this venue</a>
         </div>
       </div>
     </div>
