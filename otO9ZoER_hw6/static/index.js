@@ -325,7 +325,13 @@ async function showVenueDetail(venueId) {
       + (detail.postal ? `+${detail.postal}` : '');
     document.getElementById('venue-detail-map-anchor').href = mapSearchLink;
     // upcoming events link
-    document.getElementById('venue-detail-more-anchor').href = detail.upcoming;
+    const venueAnchor = document.getElementById('venue-detail-more-anchor');
+    venueAnchor.href = detail.upcoming;
+    if (detail.upcoming === '') {
+      venueAnchor.setAttribute('disabled', '');
+    } else {
+      venueAnchor.removeAttribute('disabled');
+    }
 
     // scroll to bottom
     window.scrollTo(0, document.body.scrollHeight);
