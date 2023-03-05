@@ -9,7 +9,7 @@ export const CATEGORY_OPTIONS = {
   Miscellaneous: '&segmentId=KZFzniwnSyZfZ7v7n1',
 };
 
-export const TICKET_STATUS = {
+const TICKET_STATUS = {
   none: { text: '', color: 'black' },
   undefined: { text: '', color: 'black' },
   onsale: { text: 'On Sale', color: 'green'}, 

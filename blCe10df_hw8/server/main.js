@@ -1,10 +1,103 @@
 "use strict";
 
+import axios from 'axios';
 import express from 'express';
+import Geohash from 'latlon-geohash';
+import util from 'node:util';
+import { 
+  CATEGORY_OPTIONS, 
+  extractEvent, 
+  extractEventDetail, 
+  extractVenueDetail, 
+  TICKETMASTER_API_KEY,
+} from './utils.js';
+
 const app = express();
 
-app.get('/api', (request, response) => {
-  response.json({ message: 'working' });
+const PORT = 8081;
+const parentRoute = '/api';
+
+// search event with keywords, location, and category
+app.get(`${parentRoute}/search`, (request, response) => {
+  // const queries = request.query;
+  const queries = {
+    keyword: 'usc', 
+    distance: 10, 
+    category: 'Default', 
+    lng: -118.2863, 
+    lat: 34.0030,
+  };
+  console.log(`search event, params: ${util.inspect(queries)}`);
+  const geoHash = Geohash.encode(queries.lat, queries.lng, 7);
+  // eslint-disable-next-line max-len
+  const requestUrl = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&keyword=${queries.keyword}&geoPoint=${geoHash}&radius=${queries.distance}&unit=miles${CATEGORY_OPTIONS[queries.category]}`;
+  // make request to TicketMaster server, extract data,
+  // and send to client
+  axios.get(requestUrl)
+    .then((res) => {
+      if (res.status < 400) {
+        return res.data;
+      } else {
+        throw res;
+      }
+    })
+    .then((data) => {
+      const eventArray = (data._embedded?.events ?? []).map((rawEventInfo) => {
+        return extractEvent(rawEventInfo);
+      });
+      response.json({ events: eventArray });
+    })
+    .catch((error) => {
+      console.error(error);
+      response.json({});
+    });
 });
 
-app.listen(8081, () => { console.log('app started'); });
+// get event detail with event's id
+app.get(`${parentRoute}/event/:eventId`, (request, response) => {
+  const eventId = request.params.eventId;
+  console.log(`get event detail, id=${eventId}`);
+  // eslint-disable-next-line max-len
+  const requestUrl = `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${TICKETMASTER_API_KEY}`;
+  axios.get(requestUrl)
+    .then((res) => {
+      if (res.status < 400) {
+        return res.data;
+      } else {
+        throw res;
+      }
+    })
+    .then((data) => {
+      response.json({ event_detail: extractEventDetail(data) });
+    })
+    .catch((error) => {
+      console.error(error);
+      response.json({});
+    });
+});
+
+// get venue detail with venue's id
+app.get(`${parentRoute}/venue/:venueId`, (request, response) => {
+  const venueId = request.params.venueId;
+  console.log(`get venue detail, id=${venueId}`);
+  // eslint-disable-next-line max-len
+  const requestUrl = `https://app.ticketmaster.com/discovery/v2/venues/${venueId}.json?apikey=${TICKETMASTER_API_KEY}`;
+  axios.get(requestUrl)
+    .then((res) => {
+      if (res.status < 400) {
+        return res.data;
+      } else {
+        throw res;
+      }
+    })
+    .then((data) => {
+      response.json({ venue_detail: extractVenueDetail(data) });
+    })
+    .catch((error) => {
+      console.error(error);
+      response.json({});
+    });
+});
+
+// run server
+app.listen(PORT, () => { console.log(`app listening on port ${PORT}`); });
