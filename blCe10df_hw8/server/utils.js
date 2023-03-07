@@ -116,13 +116,13 @@ export function extractEventDetail(event) {
 
 export function extractVenueDetail(venue) {
   const extractedInfo = {
-    'name': venue.name ?? '',
-    'icon': '',
-    'address': [],
-    'city': venue.city?.name ?? '', 
-    'state': venue.state?.stateCode ?? '',
-    'postal': venue.postalCode ?? '',
-    'upcoming': venue.url ?? '',
+    name: venue.name ?? '',
+    icon: '',
+    address: [],
+    city: venue.city?.name ?? '', 
+    state: venue.state?.stateCode ?? '',
+    postal: venue.postalCode ?? '',
+    upcoming: venue.url ?? '',
   };
   // icon
   if (venue.images?.length) {

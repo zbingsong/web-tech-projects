@@ -15,10 +15,11 @@ import {
 const app = express();
 
 const PORT = 8081;
-const parentRoute = '/api';
+const PARENT_ROUTE = '/api';
+const TICKETMASTER_API_ROUTE = 'https://app.ticketmaster.com/discovery/v2';
 
 // search event with keywords, location, and category
-app.get(`${parentRoute}/search`, (request, response) => {
+app.get(`${PARENT_ROUTE}/search`, (request, response) => {
   // const queries = request.query;
   const queries = {
     keyword: 'usc', 
@@ -30,7 +31,7 @@ app.get(`${parentRoute}/search`, (request, response) => {
   console.log(`search event, params: ${util.inspect(queries)}`);
   const geoHash = Geohash.encode(queries.lat, queries.lng, 7);
   // eslint-disable-next-line max-len
-  const requestUrl = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_API_KEY}&keyword=${queries.keyword}&geoPoint=${geoHash}&radius=${queries.distance}&unit=miles${CATEGORY_OPTIONS[queries.category]}`;
+  const requestUrl = `${TICKETMASTER_API_ROUTE}/events.json?apikey=${TICKETMASTER_API_KEY}&keyword=${queries.keyword}&geoPoint=${geoHash}&radius=${queries.distance}&unit=miles${CATEGORY_OPTIONS[queries.category]}`;
   // make request to TicketMaster server, extract data,
   // and send to client
   axios.get(requestUrl)
@@ -54,11 +55,11 @@ app.get(`${parentRoute}/search`, (request, response) => {
 });
 
 // get event detail with event's id
-app.get(`${parentRoute}/event/:eventId`, (request, response) => {
+app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
   const eventId = request.params.eventId;
   console.log(`get event detail, id=${eventId}`);
   // eslint-disable-next-line max-len
-  const requestUrl = `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${TICKETMASTER_API_KEY}`;
+  const requestUrl = `${TICKETMASTER_API_ROUTE}/events/${eventId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
     .then((res) => {
       if (res.status < 400) {
@@ -77,11 +78,11 @@ app.get(`${parentRoute}/event/:eventId`, (request, response) => {
 });
 
 // get venue detail with venue's id
-app.get(`${parentRoute}/venue/:venueId`, (request, response) => {
+app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
   const venueId = request.params.venueId;
   console.log(`get venue detail, id=${venueId}`);
   // eslint-disable-next-line max-len
-  const requestUrl = `https://app.ticketmaster.com/discovery/v2/venues/${venueId}.json?apikey=${TICKETMASTER_API_KEY}`;
+  const requestUrl = `${TICKETMASTER_API_ROUTE}/venues/${venueId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
     .then((res) => {
       if (res.status < 400) {
