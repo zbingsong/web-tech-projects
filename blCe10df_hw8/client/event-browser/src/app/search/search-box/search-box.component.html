@@ -1,1 +1,42 @@
-<p>search-box works!</p>
+<div class="card">
+  <form class="card-body">
+    <div class="form-group card-title">
+      Events Search
+    </div>
+  
+    <div class="form-group">
+      <label for="search-box-keyword">Keyword<span id="asterisk">*</span></label>
+      <input id="search-box-keyword" name="keyword" type="text" class="form-control" [(ngModel)]="newSearch.keyword" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="search-box-distance">Distance</label>
+      <input id="search-box-distance" name="distance" type="number" class="form-control" [(ngModel)]="newSearch.distance">
+    </div>
+    
+    <div class="form-group">
+      <label for="search-box-category">Category<span id="asterisk">*</span></label>
+      <select id="search-box-category" name="category" class="form-control" [(ngModel)]="newSearch.category">
+        <option value="Default">Default</option>
+        <option value="Music">Music</option>
+        <option value="Sports">Sports</option>
+        <option value="Arts">Arts & Theatre</option>
+        <option value="Film">Film</option>
+        <option value="Miscellaneous">Miscellaneous</option>
+      </select>
+    </div>
+  
+    <div class="form-group" *ngIf="!ifDetectLocation">
+      <label for="search-box-location">Location<span id="asterisk">*</span></label>
+      <input id="search-box-location" name="location" class="form-control" type="text" [(ngModel)]="location" required="{{ !ifDetectLocation }}">
+    </div>
+  
+    <div class="form-group">
+      <input id="search-box-checkbox" name="location-checkbox" type="checkbox" (change)="toggleLocCheckbox()" class="form-check-input" [checked]="ifDetectLocation">
+      <label for="search-box-checkbox" class="form-check-label">Auto-Detect Location</label>
+    </div>
+
+    <button type="button" class="btn btn-danger" (click)="searchEvents()">Submit</button>
+    <button type="button" class="btn btn-primary" (click)="resetForm()">Clear</button>
+  </form>
+</div>
