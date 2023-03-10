@@ -1,2 +1,9 @@
+<div class="justify-content-end">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="currentRoute" class="nav" *ngFor="let link of links">
+    <li class="nav-item" [ngbNavItem]="link.path">
+      <a ngbNavLink routerLink="{{ link.path }}">{{ link.title }}</a>
+    </li>
+  </ul>
+</div>
 
-<app-search></app-search>
+<router-outlet></router-outlet>

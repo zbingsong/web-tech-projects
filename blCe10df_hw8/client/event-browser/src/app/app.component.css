@@ -1,0 +1,17 @@
+div {
+  display: flex;
+}
+
+a {
+  color: white;
+}
+
+a.active {
+  color: white;
+  border: 2px solid white;
+  border-radius: 12px;
+}
+
+a:hover {
+  color: white;
+}

@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'event-browser';
+  public currentRoute: string = '/search';
+  public readonly links = [
+    { title: 'Search', path: '/search' },
+    { title: 'Favorites', path: '/favorites' },
+  ];
 }
