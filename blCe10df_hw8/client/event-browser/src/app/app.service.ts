@@ -16,6 +16,10 @@ export class AppService {
   public eventDetailSubj$ = new Subject<EventDetailData>();
   // used by venue-detail component
   public venueDetailSubj$ = new Subject<VenueDetailData>();
+  // used by search component to determine if to show sub-component
+  public ifShowSearchResult$ = new Subject<boolean>();
+  public ifShowEventDetail$ = new Subject<boolean>();
+  public ifShowVenueDetail$ = new Subject<boolean>();
   // prefix of Node.js backend API
   private readonly API_ROUTE = '/api';
 
@@ -35,6 +39,7 @@ export class AppService {
       }),
       (data: Observable<EventInfoData>) => {
         data.subscribe(this.eventInfoSubj$);
+        this.ifShowSearchResult$.next(true);
         return data;
       },
     );
@@ -49,6 +54,7 @@ export class AppService {
       }),
       (data: Observable<EventDetailData>) => {
         data.subscribe(this.eventDetailSubj$);
+        this.ifShowEventDetail$.next(true);
         return data;
       },
     );
@@ -63,6 +69,7 @@ export class AppService {
       }),
       (data: Observable<VenueDetailData>) => {
         data.subscribe(this.venueDetailSubj$);
+        this.ifShowVenueDetail$.next(true);
         return data;
       },
     );
