@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,8 @@ import { EventDetailComponent } from './search/event-detail/event-detail.compone
 // eslint-disable-next-line max-len
 import { VenueDetailComponent } from './search/venue-detail/venue-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EventDetailComponent,
     VenueDetailComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    FormsModule,
+    HttpClientModule,
+    NgbNavModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
