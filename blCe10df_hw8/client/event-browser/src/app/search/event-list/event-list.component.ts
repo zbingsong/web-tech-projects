@@ -9,25 +9,42 @@ import { EventInfo, EventInfoData } from 'src/app/common/event-info.interface';
   styleUrls: ['./event-list.component.css'],
 })
 export class EventListComponent implements OnInit, OnDestroy {
-  public ifAnyResult: boolean = false;
   private subscription?: Subscription;
-  public eventList?: EventInfo[];
+  public eventList: EventInfo[] = [];
+  private sortingDirection = -1;
 
   constructor(private readonly service: AppService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.subscription = this.service.eventInfoSubj$.subscribe(
       (data: EventInfoData) => {
         if (data.events !== undefined) {
           this.eventList = data.events;
+          // sort by date and then by time ascending
+          this.eventList.sort((event1: EventInfo, event2: EventInfo) => {
+            let res: number = event1.date.localeCompare(event2.date);
+            if (res === 0) {
+              res = event1.time.localeCompare(event2.time);
+            }
+            return res;
+          });
         }
       },
     );
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription !== undefined) {
-      this.subscription.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  public showEventDetail(eventId: string): void {
+    this.service.getEventDetail(eventId);
+  }
+
+  public sortTable(key: keyof EventInfo): void {
+    this.eventList.sort((event1: EventInfo, event2: EventInfo) => {
+      this.sortingDirection = -this.sortingDirection;
+      return this.sortingDirection * event1[key].localeCompare(event2[key]);
+    });
   }
 }

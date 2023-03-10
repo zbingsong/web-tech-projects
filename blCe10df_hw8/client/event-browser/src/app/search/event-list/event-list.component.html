@@ -1,7 +1,38 @@
 <p>event-list works!</p>
-<div *ngIf="ifAnyResult; else elseBlock">
-  
+<div class="panel panel-default" *ngIf="eventList.length > 0; else elseBlock">
+  <table class="table table-striped table-dark table-borderless">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Icon</th>
+        <th scope="col" (click)="sortTable('name')">Event</th>
+        <th scope="col" (click)="sortTable('genre')">Genre</th>
+        <th scope="col" (click)="sortTable('venue')">Venue</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let event of eventList">
+      <tr (click)="showEventDetail(event.id)">
+        <td>
+          <p>{{ event.date }}</p>
+          <p>{{ event.time }}</p>
+        </td>
+        <td>
+          <img [src]="event.image_url">
+        </td>
+        <td>
+          {{ event.name }}
+        </td>
+        <td>
+          {{ event.genre }}
+        </td>
+        <td>
+          {{ event.venue }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<ng-template #elseBlock>
 
+<ng-template #elseBlock class="card">
+  No results found.
 </ng-template>
