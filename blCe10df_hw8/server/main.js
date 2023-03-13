@@ -6,6 +6,7 @@ import Geohash from 'latlon-geohash';
 import util from 'node:util';
 import { 
   CATEGORY_OPTIONS, 
+  extractAutoCompleteOptions, 
   extractEvent, 
   extractEventDetail, 
   extractVenueDetail, 
@@ -17,6 +18,29 @@ const app = express();
 const PORT = 8081;
 const PARENT_ROUTE = '/api';
 const TICKETMASTER_API_ROUTE = 'https://app.ticketmaster.com/discovery/v2';
+
+// for auto complete
+app.get(`${PARENT_ROUTE}/suggest`, (request, response) => {
+  // console.log(request.query);
+  console.log(`auto complete on keyword ${request.query.keyword}`);
+  // eslint-disable-next-line max-len
+  const requestUrl = `${TICKETMASTER_API_ROUTE}/suggest?apikey=${TICKETMASTER_API_KEY}&keyword=${request.query.keyword}`;
+  axios.get(requestUrl)
+    .then((res) => {
+      if (res.status < 400) {
+        return res.data;
+      } else {
+        throw res;
+      }
+    })
+    .then((data) => {
+      response.json(extractAutoCompleteOptions(data));
+    })
+    .catch((error) => {
+      console.error(error);
+      response.status(500).json({});
+    });
+});
 
 // search event with keywords, location, and category
 app.get(`${PARENT_ROUTE}/search`, (request, response) => {
@@ -46,11 +70,11 @@ app.get(`${PARENT_ROUTE}/search`, (request, response) => {
       const eventArray = (data._embedded?.events ?? []).map((rawEventInfo) => {
         return extractEvent(rawEventInfo);
       });
-      response.json({ events: eventArray });
+      response.json(eventArray);
     })
     .catch((error) => {
       console.error(error);
-      response.json({});
+      response.status(500).json({});
     });
 });
 
@@ -69,11 +93,11 @@ app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
       }
     })
     .then((data) => {
-      response.json({ event_detail: extractEventDetail(data) });
+      response.json(extractEventDetail(data));
     })
     .catch((error) => {
       console.error(error);
-      response.json({});
+      response.status(500).json({});
     });
 });
 
@@ -92,11 +116,11 @@ app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
       }
     })
     .then((data) => {
-      response.json({ venue_detail: extractVenueDetail(data) });
+      response.json(extractVenueDetail(data));
     })
     .catch((error) => {
       console.error(error);
-      response.json({});
+      response.status(500).json({});
     });
 });
 

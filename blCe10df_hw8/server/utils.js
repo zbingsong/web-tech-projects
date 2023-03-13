@@ -19,6 +19,11 @@ const TICKET_STATUS = {
   rescheduled: { text: 'Rescheduled', color: 'orange'},
 };
 
+export function extractAutoCompleteOptions(data) {
+  if (!data?._embedded?.attractions) return [];
+  return data._embedded.attractions.map((artist) => (artist.name));
+}
+
 export function extractEvent(event) {
   if (!event) return {};
   const extractedInfo = {
