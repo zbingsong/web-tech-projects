@@ -7,7 +7,3 @@ export interface VenueDetail {
   postal: string;
   upcoming: string;
 }
-
-export interface VenueDetailData {
-  venue_Detail: VenueDetail;
-}

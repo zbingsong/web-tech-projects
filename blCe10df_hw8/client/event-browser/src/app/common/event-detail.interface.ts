@@ -1,4 +1,5 @@
 export interface EventDetail {
+  id: string;
   name: string;
   date: string;
   time: string;
@@ -11,8 +12,4 @@ export interface EventDetail {
   status_color: string;
   buy: string;
   seatmap: string;
-}
-
-export interface EventDetailData {
-  event_detail?: EventDetail;
 }

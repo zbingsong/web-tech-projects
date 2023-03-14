@@ -7,7 +7,3 @@ export interface EventInfo {
   genre: string;
   venue: string;
 }
-
-export interface EventInfoData {
-  events?: EventInfo[];
-}
