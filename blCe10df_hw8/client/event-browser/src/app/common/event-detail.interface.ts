@@ -3,8 +3,9 @@ export interface EventDetail {
   name: string;
   date: string;
   time: string;
-  artist: string[];
+  artists: Array<{ name: string; category: string }>;
   genre: string;
+  category: string;
   venue_id: string;
   venue: string;
   price: string;
