@@ -1,6 +1,14 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,11 +18,6 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { EventListComponent } from './search/event-list/event-list.component';
 // eslint-disable-next-line max-len
 import { EventDetailComponent } from './search/event-detail/event-detail.component';
-// eslint-disable-next-line max-len
-import { VenueDetailComponent } from './search/venue-detail/venue-detail.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,6 @@ import { HttpClientModule } from '@angular/common/http';
     SearchBoxComponent,
     EventListComponent,
     EventDetailComponent,
-    VenueDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +36,11 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     NgbNavModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatTabsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
