@@ -45,7 +45,7 @@ export function extractEvent(event) {
   }
   // image_url
   if (event.images?.length) {
-    extractedInfo.image_url = event.images[0];
+    extractedInfo.image_url = event.images[0].url;
   }
   // genre
   if (event.classifications?.length) {
@@ -61,11 +61,13 @@ export function extractEvent(event) {
 
 export function extractEventDetail(event) {
   const extractedInfo = {
+    id: event.id,
     name: event.name ?? '',
     date: '',
     time: '',
-    artist: [],
+    artists: [],
     genre: '',
+    category: '',
     venue_id: '',
     venue: '',
     price: '',
@@ -81,14 +83,15 @@ export function extractEventDetail(event) {
   if (!event.dates.start.timeTBA) {
     extractedInfo.time = event.dates.start.localTime;
   }
-  // artist
+  // artists
   if (event._embedded.attractions?.length) {
-    extractedInfo.artist = event._embedded.attractions.map((attraction) => ({
-      artist: attraction.name, 
+    extractedInfo.artists = event._embedded.attractions.map((attraction) => ({
+      name: attraction.name, 
+      category: attraction.classifications.segment?.name ?? '',
       url: attraction.url ?? '',
     }));
   }
-  // genre
+  // genre and category
   if (event.classifications?.length) {
     const classifications = event.classifications;
     const genreArray = [];
@@ -102,6 +105,7 @@ export function extractEventDetail(event) {
       }
     });
     extractedInfo.genre = genreArray.join(' | ');
+    extractedInfo.category = genreArray.length > 0 ? genreArray[0] : '';
   }
   // venue
   if (event._embedded.venues?.length) {
@@ -117,6 +121,26 @@ export function extractEventDetail(event) {
   }
   // return
   return extractedInfo;
+}
+
+export function extractArtistDetail(artistList) {
+  if (artistList.length === 0) {
+    return {};
+  }
+  const extractedInfo = {
+    id: artistList[0].id,
+    name: artistList[0].name,
+    followers: artistList[0].followers.total,
+    popularity: artistList[0].popularity,
+    url: artistList[0].external_urls.spotify,
+    image: artistList[0].images[0].url,
+    albums: [],
+  };
+  return extractedInfo;
+}
+
+export function extractArtistAlbums(albumList) {
+  return albumList.map((album) => album.images[0].url);
 }
 
 export function extractVenueDetail(venue) {
