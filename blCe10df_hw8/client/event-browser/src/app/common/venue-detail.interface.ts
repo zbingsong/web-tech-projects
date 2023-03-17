@@ -1,9 +1,12 @@
 export interface VenueDetail {
   name: string;
-  icon: string;
-  address: string[];
-  city: string;
-  state: string;
-  postal: string;
-  upcoming: string;
+  address: string;
+  phone: string;
+  openHours: string;
+  genRule: string;
+  childRule: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
 }
