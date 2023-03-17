@@ -1,7 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,7 +21,7 @@ import { EventListComponent } from './search/event-list/event-list.component';
 // eslint-disable-next-line max-len
 import { EventDetailComponent } from './search/event-detail/event-detail.component';
 // eslint-disable-next-line max-len
-import { MapDialogComponent } from './search/event-detail/artists-dashboard/map-dialog/map-dialog.component';
+import { MapDialogComponent } from './search/event-detail/venue-dashboard/map-dialog/map-dialog.component';
 // eslint-disable-next-line max-len
 import { VenueDashboardComponent } from './search/event-detail/venue-dashboard/venue-dashboard.component';
 // eslint-disable-next-line max-len
@@ -53,6 +55,8 @@ import { EventDashboardComponent } from './search/event-detail/event-dashboard/e
     MatTabsModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

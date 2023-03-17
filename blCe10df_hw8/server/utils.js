@@ -146,26 +146,34 @@ export function extractArtistAlbums(albumList) {
 export function extractVenueDetail(venue) {
   const extractedInfo = {
     name: venue.name ?? '',
-    icon: '',
-    address: [],
-    city: venue.city?.name ?? '', 
-    state: venue.state?.stateCode ?? '',
-    postal: venue.postalCode ?? '',
-    upcoming: venue.url ?? '',
+    address: '',
+    phone: venue.boxOfficeInfo?.phoneNumberDetail ?? '',
+    openHours: venue.boxOfficeInfo?.openHoursDetail ?? '',
+    genRule: venue.generalInfo?.generalRule ?? '',
+    childRule: venue.generalInfo?.childRule ?? '',
+    location: {
+      lat: 0,
+      lng: 0,
+    },
   };
-  // icon
-  if (venue.images?.length) {
-    extractedInfo.icon = venue.images[0].url;
-  }
   // address
-  if (venue.address.line1) {
-    extractedInfo.address.push(venue.address.line1);
-    if (venue.address.line2) {
-      extractedInfo.address.push(venue.address.line2);
-      if (venue.address.line3) {
-        extractedInfo.address.push(venue.address.line3);
-      }
-    }
+  const venueAddr = [];
+  if (venue.address?.line1) {
+    venueAddr.push(venue.address.line1);
+  }
+  if (venue.city?.name) {
+    venueAddr.push(venue.city.name);
+  }
+  if (venue.state?.name) {
+    venueAddr.push(venue.state.name);
+  }
+  extractedInfo.address = venueAddr.join(', ');
+  // location
+  if (venue.location?.longitude) {
+    extractedInfo.location.lng = parseFloat(venue.location.longitude);
+  }
+  if (venue.location?.latitude) {
+    extractedInfo.location.lat = parseFloat(venue.location.latitude);
   }
   // return
   return extractedInfo;

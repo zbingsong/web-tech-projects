@@ -25,11 +25,11 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: '767c268ac092486d9e0eeed414d665bc',
 });
 let lastSpotifyTokenRefresh = 0;
-spotifyApi.clientCredentialsGrant() 
-  .then((data) => {
-    spotifyApi.setAccessToken(data.body.access_token);
-  })
-  .catch((error) => { console.log(error); });
+// spotifyApi.clientCredentialsGrant() 
+//   .then((data) => {
+//     spotifyApi.setAccessToken(data.body.access_token);
+//   })
+//   .catch((error) => { console.log(error); });
 
 const PORT = 8081;
 const PARENT_ROUTE = '/api';
@@ -39,7 +39,7 @@ const SPOTIFY_TOKEN_TTL = 3600000;
 // for auto complete
 app.get(`${PARENT_ROUTE}/suggest`, (request, response) => {
   // console.log(request.query);
-  console.log(`${Date.now()}: auto complete, keyword ${request.query.keyword}`);
+  console.log(`${Date()}: auto complete, keyword ${request.query.keyword}`);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/suggest?apikey=${TICKETMASTER_API_KEY}&keyword=${request.query.keyword}`;
   axios.get(requestUrl)
@@ -69,7 +69,7 @@ app.get(`${PARENT_ROUTE}/search`, (request, response) => {
     lng: -118.2863, 
     lat: 34.0030,
   };
-  console.log(`${Date.now()}: search event, params: ${util.inspect(queries)}`);
+  console.log(`${Date()}: search event, params: ${util.inspect(queries)}`);
   const geoHash = Geohash.encode(queries.lat, queries.lng, 7);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/events.json?apikey=${TICKETMASTER_API_KEY}&keyword=${queries.keyword}&geoPoint=${geoHash}&radius=${queries.distance}&unit=miles${CATEGORY_OPTIONS[queries.category]}`;
@@ -98,7 +98,7 @@ app.get(`${PARENT_ROUTE}/search`, (request, response) => {
 // get event detail with event's id
 app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
   const eventId = request.params.eventId;
-  console.log(`${Date.now()}: get event detail, id=${eventId}`);
+  console.log(`${Date()}: get event detail, id=${eventId}`);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/events/${eventId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
@@ -121,7 +121,7 @@ app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
 // get venue detail with venue's id
 app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
   const venueId = request.params.venueId;
-  console.log(`${Date.now()}: get venue detail, id=${venueId}`);
+  console.log(`${Date()}: get venue detail, id=${venueId}`);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/venues/${venueId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
@@ -143,6 +143,7 @@ app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
 
 // get artist info using Spotify API
 app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
+  console.log(`${Date()}: search for artist, keyword=${request.query.keyword}`);
   if (Date.now() - lastSpotifyTokenRefresh >= SPOTIFY_TOKEN_TTL) {
     // console.log('refresh Spotify access token');
     lastSpotifyTokenRefresh = Date.now();
@@ -169,7 +170,7 @@ app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
       })
       .then((artistDetail) => {
         if (!artistDetail.id) {
-          response.json({ id: null });
+          response.json({ id: '' });
         } else {
           spotifyApi.getArtistAlbums(artistDetail.id, { limit: 3 })
           .then((res) => {
@@ -193,6 +194,7 @@ app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
         response.status(500).json({});
       });
   } else {
+    // console.log('not refresh spotify token');
     spotifyApi.searchArtists(request.query.keyword)
       .then((res) => {
         if (res.statusCode < 400) {
@@ -207,7 +209,7 @@ app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
       })
       .then((artistDetail) => {
         if (!artistDetail.id) {
-          response.json({ id: null });
+          response.json({ id: '' });
         } else {
           spotifyApi.getArtistAlbums(artistDetail.id)
           .then((res) => {

@@ -33,4 +33,8 @@ export class VenueDashboardComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
+
+  public showMap(): void {
+    
+  }
 }
