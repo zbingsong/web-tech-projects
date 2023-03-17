@@ -1,1 +1,118 @@
-<p>event-detail works!</p>
+<div class="container card" [hidden]="ifSearched && !ifResultList" *ngIf="eventDetail !== undefined">
+  <div class="row">
+    <button type="button" (click)="hideEventDetail()">
+      <span class="back-button-arrow">&#8735;</span>
+      <span>Back</span>
+    </button>
+  </div>
+  <div class="row">
+    <span>{{ eventDetail.name }}</span>
+    <button type="button">
+      <span class="material-icons">
+        lens
+      </span>
+      <mat-icon *ngIf="addedToFavorites">favorite</mat-icon>
+      <mat-icon *ngIf="!addedToFavorites">favorite_border</mat-icon>
+    </button>
+  </div>
+  <div class="row">
+    <!-- tab navigator -->
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Events">
+        <div class="d-flex flex-wrap">
+          <div>
+            <ul class="list-group">
+              <li class="list-group-item border-0" *ngIf="eventDetail.date !== ''">
+                <p class="info-label">Date</p>
+                <p>{{ eventDetail.date }}</p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.artists.length !== 0">
+                <p class="info-label">Artists/Team</p>
+                <p>{{ artistsText }}</p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.venue !== ''">
+                <p class="info-label">Venue</p>
+                <p>{{ eventDetail.venue }}</p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.genre !== ''">
+                <p class="info-label">Genres</p>
+                <p>{{ eventDetail.genre }}</p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.price !== ''">
+                <p class="info-label">Price Ranges</p>
+                <p>{{ eventDetail.price }}</p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.status !== ''">
+                <p class="info-label">Ticket Status</p>
+                <p class="ticket-status" [ngStyle]="{ 'background-color': eventDetail.status_color }">
+                  {{ eventDetail.status }}
+                </p>
+              </li>
+              <li class="list-group-item border-0" *ngIf="eventDetail.buy !== ''">
+                <p class="info-label">Buy Ticket At:</p>
+                <p>
+                  <a href={{ eventDetail.buy }} target="_blank" rel="noopener noreferrer">Ticketmaster</a>
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <img src="{{ eventDetail.seatmap }}" class="seatmap">
+          </div>
+        </div>
+        <div>
+          <span>Share on: </span>
+          <a href="#"><img class="icon" src="../../../assets/logo-twitter-png-5860.png"></a>
+          <a href="#"><img class="icon" src="../../../assets/facebook-logo-481.png"></a>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Artists/Team">
+        <div *ngIf="eventDetail.category === 'Music'; else elseBlock" class="carousel slide" id="artist-detail-carousel" data-ride="carousel">
+          <div class="carousel-inner" *ngFor="let artist of artists">
+            <div class="carousel-item active">
+              <img src="{{ artist.image }}" class="d-block w-100" alt="{{ artist.name }}">
+              <div>
+                <p class="info-label">Popularity</p>
+                <mat-progress-spinner
+                  class="example-margin"
+                  [value]="artist.popularity">
+                </mat-progress-spinner>
+                <p>{{ artist.popularity }}</p>
+              </div>
+              <div>
+                <p class="info-label">Followers</p>
+                <p>{{ artist.followers.toLocaleString() }}</p>
+              </div>
+              <div>
+                <p class="info-label">Spotify Link</p>
+                <a href="{{ artist.url }}"><img src="../../../assets/spotify-logo-png-7075.png" class="icon"></a>
+              </div>
+              <div>
+                <p class="info-label">Album featuring {{ artist.name }}</p>
+                <div *ngFor="let albumImg in artist.albums">
+                  <img class="album-img" src="{{ albumImg }}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#artist-detail-carousel" role="button" data-slide="prev" [hidden]="artists.length <= 1">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#artist-detail-carousel" role="button" data-slide="next" [hidden]="artists.length <= 1">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <ng-template #elseBlock>
+          <span id="artist-no-content">No music related artist details to show</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Venue">
+        Overview Content
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
