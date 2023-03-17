@@ -1,5 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { GOOGLE_GEOCODING_API_KEY, IPINFO_API_KEY } from 'src/app/api.keys';
 import { AppService } from 'src/app/app.service';
 import { SearchCriteria } from 'src/app/common/search-criteria.interface';
@@ -9,9 +17,12 @@ import { SearchCriteria } from 'src/app/common/search-criteria.interface';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.css'],
 })
-export class SearchBoxComponent {
+export class SearchBoxComponent implements OnInit {
   public ifDetectLocation: boolean = false;
   public location: string = '';
+  private readonly searchTerm: Subject<string> = new Subject<string>();
+  public autoCompleteOptions: string[] = [];
+  public isOptionLoading: boolean = false;
   public readonly newSearch: SearchCriteria = {
     keyword: '',
     category: 'Default',
@@ -24,6 +35,35 @@ export class SearchBoxComponent {
     private readonly service: AppService,
     private readonly http: HttpClient,
   ) {}
+
+  public ngOnInit(): void {
+    this.searchTerm
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.isOptionLoading = true;
+        }),
+        switchMap((term: string) =>
+          this.service.autoComplete(term).pipe(
+            finalize(() => {
+              this.isOptionLoading = false;
+            }),
+          ),
+        ),
+      )
+      .subscribe((data: string[]) => {
+        this.autoCompleteOptions = data;
+      });
+  }
+
+  public changeKeyword(): void {
+    this.searchTerm.next(this.newSearch.keyword);
+  }
+
+  public onSelectOption(option: string): void {
+    this.newSearch.keyword = option;
+  }
 
   public toggleLocCheckbox(): void {
     this.ifDetectLocation = !this.ifDetectLocation;
@@ -52,6 +92,7 @@ export class SearchBoxComponent {
           this.service.searchEvents(this.newSearch);
         });
       }
+      this.service.ifSearched$.next(true);
     } catch (error) {
       console.error(`event search error: ${error as string}`);
     }
@@ -63,5 +104,6 @@ export class SearchBoxComponent {
     this.newSearch.keyword = '';
     this.newSearch.category = 'Default';
     this.newSearch.distance = 10;
+    this.service.ifSearched$.next(false);
   }
 }
