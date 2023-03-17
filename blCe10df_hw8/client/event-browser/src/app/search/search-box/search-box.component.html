@@ -1,17 +1,25 @@
 <div class="card">
-  <form class="card-body">
+  <form class="card-body" #form="ngForm" ngNativeValidate (ngSubmit)="searchEvents()">
     <div class="form-group card-title">
       Events Search
     </div>
   
     <div class="form-group">
       <label for="search-box-keyword">Keyword<span id="asterisk">*</span></label>
-      <input id="search-box-keyword" name="keyword" type="text" class="form-control" [(ngModel)]="newSearch.keyword" required>
+      <input matInput id="search-box-keyword" name="keyword" type="text" class="form-control" ngModel [(ngModel)]="newSearch.keyword" [matAutocomplete]="auto" (input)="changeKeyword()" required>
+      <mat-autocomplete [panelWidth]="400" #auto="matAutocomplete" (optionSelected)="onSelectOption($event.option.value)">
+        <mat-option *ngIf="isOptionLoading" class="is-loading">Loading...</mat-option>
+        <ng-container *ngIf="!isOptionLoading">
+          <mat-option *ngFor="let option of autoCompleteOptions" [value]="option">
+            <span>{{ option }}</span>
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
     </div>
   
     <div class="form-group">
       <label for="search-box-distance">Distance</label>
-      <input id="search-box-distance" name="distance" type="number" class="form-control" [(ngModel)]="newSearch.distance">
+      <input id="search-box-distance" name="distance" type="number" min="0" class="form-control" [(ngModel)]="newSearch.distance">
     </div>
     
     <div class="form-group">
@@ -36,7 +44,7 @@
       <label for="search-box-checkbox" class="form-check-label">Auto-Detect Location</label>
     </div>
 
-    <button type="button" class="btn btn-danger" (click)="searchEvents()">Submit</button>
+    <button type="submit" class="btn btn-danger">Submit</button>
     <button type="button" class="btn btn-primary" (click)="resetForm()">Clear</button>
   </form>
 </div>
