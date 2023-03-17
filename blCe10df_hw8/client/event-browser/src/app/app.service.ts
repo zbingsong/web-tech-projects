@@ -18,8 +18,6 @@ export class AppService {
   // used by event-detail component
   public artistDetailSubj$ = new Subject<ArtistDetail>();
   public artistAlbumsSubj$ = new Subject<string[]>();
-  // used by venue-detail component
-  public venueDetailSubj$ = new Subject<VenueDetail>();
   // prefix of Node.js backend API
   private readonly API_ROUTE = 'http://localhost:8081/api';
   // for selectively displaying components
@@ -73,23 +71,22 @@ export class AppService {
     });
   }
 
+  // called in event-detail component
   public getArtistDetail(
     artistName: string,
   ): Observable<ArtistDetail | { id: string }> {
     const requestUrl: string = `${this.API_ROUTE}/artist?keyword=${artistName}`;
-    return this.http.get<ArtistDetail | { id: string }>(requestUrl);
+    return this.http.get<ArtistDetail | { id: string }>(requestUrl).pipe(
+      catchError((error: any) => {
+        console.log(error);
+        return of({ id: '' });
+      }),
+    );
   }
 
   // called in event-detail component
-  public getVenueDetail(venueId: string): void {
+  public getVenueDetail(venueId: string): Observable<VenueDetail> {
     const requestUrl: string = `${this.API_ROUTE}/venue/${venueId}`;
-    this.http.get<VenueDetail>(requestUrl).subscribe({
-      next: (data: VenueDetail) => {
-        this.venueDetailSubj$.next(data);
-      },
-      error: (error: any) => {
-        console.error(error);
-      },
-    });
+    return this.http.get<VenueDetail>(requestUrl);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/app.service';
-import { ArtistDetail } from 'src/app/common/artist-detail.interface';
 import { EventDetail } from 'src/app/common/event-detail.interface';
 
 @Component({
@@ -15,8 +14,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   public ifSearched: boolean = false;
   public ifResultList: boolean = true;
   public addedToFavorites: boolean = false;
-  public artistsText: string = '';
-  public artists: ArtistDetail[] = [];
 
   constructor(private readonly service: AppService) {}
 
@@ -24,21 +21,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.service.eventDetailSubj$.subscribe((data: EventDetail) => {
         this.eventDetail = data;
-        this.artistsText = data.artists
-          .map((artist) => artist.name)
-          .join(' | ');
         this.addedToFavorites = localStorage.getItem(data.id) === null;
-        const artistList: Array<{ name: string; category: string }> =
-          data.artists.filter((artist) => artist.category === 'Music');
-        artistList.forEach((artist) => {
-          this.service
-            .getArtistDetail(artist.name)
-            .subscribe((artistDetail) => {
-              if (artistDetail.id !== null) {
-                this.artists.push(artistDetail as ArtistDetail);
-              }
-            });
-        });
       }),
     );
     this.subscription.add(

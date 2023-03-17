@@ -1,0 +1,30 @@
+<p>venue-dashboard works!</p>
+<div  *ngIf="venueDetail !== undefined">
+  <div>
+    <p class="info-label">Name</p>
+    <p>{{ venueDetail.name }}</p>
+  </div>
+  <div>
+    <p class="info-label">Address</p>
+    <p>{{ venueDetail.address }}</p>
+  </div>
+  <div>
+    <p class="info-label">Phone Number</p>
+    <p>{{ venueDetail.phone }}</p>
+  </div>
+  <div>
+    <p class="info-label">Open Hours</p>
+    <p>{{ venueDetail.openHours }}</p>
+  </div>
+  <div>
+    <p class="info-label">General Rule</p>
+    <p>{{ venueDetail.genRule }}</p>
+  </div>
+  <div>
+    <p class="info-label">Child Rule</p>
+    <p>{{ venueDetail.childRule }}</p>
+  </div>
+</div>
+<div>
+  <button type="button">Show venue on Google map</button>
+</div>

@@ -1,0 +1,41 @@
+<p>artists-dashboard works!</p>
+<div *ngIf="eventCategory === 'Music'; else elseBlock" class="carousel slide" id="artist-detail-carousel" data-ride="carousel">
+  <div class="carousel-inner" *ngFor="let artist of artists">
+    <div class="carousel-item active">
+      <img src="{{ artist.image }}" class="d-block w-100" alt="{{ artist.name }}">
+      <div>
+        <p class="info-label">Popularity</p>
+        <mat-progress-spinner
+          class="example-margin"
+          [value]="artist.popularity">
+        </mat-progress-spinner>
+        <p>{{ artist.popularity }}</p>
+      </div>
+      <div>
+        <p class="info-label">Followers</p>
+        <p>{{ artist.followers.toLocaleString() }}</p>
+      </div>
+      <div>
+        <p class="info-label">Spotify Link</p>
+        <a href="{{ artist.url }}"><img src="../../../assets/spotify-logo-png-7075.png" class="icon"></a>
+      </div>
+      <div>
+        <p class="info-label">Album featuring {{ artist.name }}</p>
+        <div *ngFor="let albumImg in artist.albums">
+          <img class="album-img" src="{{ albumImg }}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#artist-detail-carousel" role="button" data-slide="prev" [hidden]="artists.length <= 1">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#artist-detail-carousel" role="button" data-slide="next" [hidden]="artists.length <= 1">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<ng-template #elseBlock>
+  <span id="artist-no-content">No music related artist details to show</span>
+</ng-template>

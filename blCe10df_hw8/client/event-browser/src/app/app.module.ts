@@ -18,6 +18,14 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { EventListComponent } from './search/event-list/event-list.component';
 // eslint-disable-next-line max-len
 import { EventDetailComponent } from './search/event-detail/event-detail.component';
+// eslint-disable-next-line max-len
+import { MapDialogComponent } from './search/event-detail/artists-dashboard/map-dialog/map-dialog.component';
+// eslint-disable-next-line max-len
+import { VenueDashboardComponent } from './search/event-detail/venue-dashboard/venue-dashboard.component';
+// eslint-disable-next-line max-len
+import { ArtistsDashboardComponent } from './search/event-detail/artists-dashboard/artists-dashboard.component';
+// eslint-disable-next-line max-len
+import { EventDashboardComponent } from './search/event-detail/event-dashboard/event-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +35,10 @@ import { EventDetailComponent } from './search/event-detail/event-detail.compone
     SearchBoxComponent,
     EventListComponent,
     EventDetailComponent,
+    MapDialogComponent,
+    VenueDashboardComponent,
+    ArtistsDashboardComponent,
+    EventDashboardComponent,
   ],
   imports: [
     BrowserModule,
