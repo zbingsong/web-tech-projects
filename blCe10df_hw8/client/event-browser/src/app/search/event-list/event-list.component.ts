@@ -33,12 +33,12 @@ export class EventListComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.service.ifSearched$.subscribe((status: boolean) => {
-        this.ifSearched = !status;
+        this.ifSearched = status;
       }),
     );
     this.subscription.add(
       this.service.ifResultList$.subscribe((status: boolean) => {
-        this.ifResultList = !status;
+        this.ifResultList = status;
       }),
     );
   }
