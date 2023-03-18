@@ -16,12 +16,14 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   constructor(private readonly service: AppService) {}
 
   public ngOnInit(): void {
+    console.log('event dashboard init');
     this.subscription = this.service.eventDetailSubj$.subscribe(
       (data: EventDetail) => {
         this.eventDetail = data;
         this.artistsText = data.artists
           .map((artist) => artist.name)
           .join(' | ');
+        console.log('event dashboard received event detail');
       },
     );
   }
