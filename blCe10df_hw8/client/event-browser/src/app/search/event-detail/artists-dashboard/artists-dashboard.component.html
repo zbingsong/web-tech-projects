@@ -1,4 +1,3 @@
-<p>artists-dashboard works!</p>
 <div *ngIf="eventCategory === 'Music'; else elseBlock" class="carousel slide" id="artist-detail-carousel" data-ride="carousel">
   <div class="carousel-inner" *ngFor="let artist of artists">
     <div class="carousel-item active">
@@ -36,6 +35,7 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+
 <ng-template #elseBlock>
   <span id="artist-no-content">No music related artist details to show</span>
 </ng-template>
