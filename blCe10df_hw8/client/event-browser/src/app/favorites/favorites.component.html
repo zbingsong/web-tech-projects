@@ -1,1 +1,43 @@
-<p>favorites works!</p>
+<h1>List of your favorite events</h1>
+<div class="container">
+  <div class="panel panel-default" *ngIf="favoriteEvents.length > 0; else elseBlock">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Event</th>
+          <th scope="col">Category</th>
+          <th scope="col">Venue</th>
+          <th scope="col">Favorite</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let event of favoriteEvents; index as i">
+        <tr>
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td>
+            {{ event.date }}
+          </td>
+          <td>
+            {{ event.name }}
+          </td>
+          <td>
+            {{ event.category }}
+          </td>
+          <td>
+            {{ event.venue }}
+          </td>
+          <td>
+            <i class="bi bi-trash" (click)="removeEvent(event.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <ng-template #elseBlock class="card">
+    No favorite events to show
+  </ng-template>
+</div>
