@@ -8,7 +8,10 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { GOOGLE_GEOCODING_API_KEY, IPINFO_API_KEY } from 'src/app/api.keys';
+import {
+  GOOGLE_GEOCODING_API_KEY,
+  IPINFO_API_KEY,
+} from 'src/app/common/api.keys';
 import { AppService } from 'src/app/app.service';
 import { SearchCriteria } from 'src/app/common/search-criteria.interface';
 
@@ -93,6 +96,8 @@ export class SearchBoxComponent implements OnInit {
         });
       }
       this.service.ifSearched$.next(true);
+      this.service.ifResultList$.next(true);
+      console.log('event searched');
     } catch (error) {
       console.error(`event search error: ${error as string}`);
     }
