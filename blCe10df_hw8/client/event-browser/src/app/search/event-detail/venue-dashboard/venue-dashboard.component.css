@@ -1,0 +1,11 @@
+/* https://stackoverflow.com/questions/11989546/wrap-a-text-within-only-two-lines-inside-div */
+p.text-wrap {
+  line-height: 1em;
+  height: 2em;
+  overflow: hidden;
+}
+
+p.show-all-text {
+  overflow: visible;
+  height: auto;
+}

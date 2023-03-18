@@ -1,1 +1,10 @@
-<p>map-dialog works!</p>
+<h1 mat-dialog-title>Event Venue</h1>
+<hr>
+<div mat-dialog-content>
+  <google-map [options]="data">
+    <map-marker [position]="data.center"></map-marker>
+ </google-map>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="btn btn-dark" (click)="closeDialog()">Close</button>
+</div>

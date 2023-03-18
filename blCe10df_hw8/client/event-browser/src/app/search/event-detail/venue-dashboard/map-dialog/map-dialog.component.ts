@@ -13,10 +13,6 @@ export class MapDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   closeDialog(): void {
     this.dialogRef.close();
   }
