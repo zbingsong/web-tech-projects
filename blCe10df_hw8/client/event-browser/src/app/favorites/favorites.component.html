@@ -12,8 +12,8 @@
           <th scope="col">Favorite</th>
         </tr>
       </thead>
-      <tbody *ngFor="let event of favoriteEvents; index as i">
-        <tr>
+      <tbody>
+        <tr *ngFor="let event of favoriteEvents; index as i">
           <td>
             {{ i + 1 }}
           </td>
