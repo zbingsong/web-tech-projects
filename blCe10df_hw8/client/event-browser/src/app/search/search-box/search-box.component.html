@@ -1,11 +1,13 @@
-<div class="card">
-  <form class="card-body" #form="ngForm" ngNativeValidate (ngSubmit)="searchEvents()">
-    <div class="form-group card-title">
+<div class="card pb-5 my-5 mx-auto">
+  <form #form="ngForm" ngNativeValidate (ngSubmit)="searchEvents()">
+    <div class="form-group card-title text-center mx-4 my-3 pt-4 pb-3 text-white border-white border-bottom fs-1">
       Events Search
     </div>
-  
-    <div class="form-group">
-      <label for="search-box-keyword">Keyword<span id="asterisk">*</span></label>
+    
+    <div class="form-group px-4 pt-2 pb-3 w-100" id="div-keyword">
+      <label for="search-box-keyword" class="pb-1 text-info">
+        Keyword <span class="text-danger">*</span>
+      </label>
       <input matInput id="search-box-keyword" name="keyword" type="text" class="form-control" ngModel [(ngModel)]="newSearch.keyword" [matAutocomplete]="auto" (input)="changeKeyword()" required>
       <mat-autocomplete [panelWidth]="400" #auto="matAutocomplete" (optionSelected)="onSelectOption($event.option.value)">
         <mat-option *ngIf="isOptionLoading" class="is-loading">Loading...</mat-option>
@@ -16,35 +18,47 @@
         </ng-container>
       </mat-autocomplete>
     </div>
-  
-    <div class="form-group">
-      <label for="search-box-distance">Distance</label>
-      <input id="search-box-distance" name="distance" type="number" min="0" class="form-control" [(ngModel)]="newSearch.distance">
-    </div>
     
-    <div class="form-group">
-      <label for="search-box-category">Category<span id="asterisk">*</span></label>
-      <select id="search-box-category" name="category" class="form-control" [(ngModel)]="newSearch.category">
-        <option value="Default">Default</option>
-        <option value="Music">Music</option>
-        <option value="Sports">Sports</option>
-        <option value="Arts">Arts & Theatre</option>
-        <option value="Film">Film</option>
-        <option value="Miscellaneous">Miscellaneous</option>
-      </select>
+    <div class="d-flex flex-wrap form-group px-4 w-100">
+      <div class="form-group pe-2 pt-2 pb-3" id="div-distance">
+        <label for="search-box-distance" class="pb-1 text-info">
+          Distance
+        </label>
+        <input id="search-box-distance" name="distance" type="number" min="0" class="form-control" [(ngModel)]="newSearch.distance">
+      </div>
+      
+      <div class="form-group pt-2 pb-3" id="div-category">
+        <label for="search-box-category" class="pb-1 text-info">
+          Category <span class="text-danger">*</span>
+        </label>
+        <select id="search-box-category" name="category" class="form-control form-select" [(ngModel)]="newSearch.category">
+          <option value="Default">Default</option>
+          <option value="Music">Music</option>
+          <option value="Sports">Sports</option>
+          <option value="Arts">Arts & Theatre</option>
+          <option value="Film">Film</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+      </div>
     </div>
   
-    <div class="form-group" *ngIf="!ifDetectLocation">
-      <label for="search-box-location">Location<span id="asterisk">*</span></label>
+    <div class="form-group px-4 pt-2 pb-3 w-100" id="div-location" *ngIf="!ifDetectLocation">
+      <label for="search-box-location" class="pb-1 text-info">
+        Location <span class="text-danger">*</span>
+      </label>
       <input id="search-box-location" name="location" class="form-control" type="text" [(ngModel)]="location" required="{{ !ifDetectLocation }}">
     </div>
   
-    <div class="form-group">
-      <input id="search-box-checkbox" name="location-checkbox" type="checkbox" (change)="toggleLocCheckbox()" class="form-check-input" [checked]="ifDetectLocation">
-      <label for="search-box-checkbox" class="form-check-label">Auto-Detect Location</label>
+    <div class="form-group px-4 pt-2 pb-3 w-100" id="div-checkbox">
+      <input id="search-box-checkbox" name="location-checkbox" type="checkbox" (change)="toggleLocCheckbox()" class="form-check-input me-2" [checked]="ifDetectLocation">
+      <label for="search-box-checkbox" class="form-check-label text-info pb-1">
+        Auto-detect your location
+      </label>
     </div>
-
-    <button type="submit" class="btn btn-danger">Submit</button>
-    <button type="button" class="btn btn-primary" (click)="resetForm()">Clear</button>
+    
+    <div id="button-div" class="text-center pb-4">
+      <button type="submit" class="btn btn-danger mx-2">SUBMIT</button>
+      <button type="button" class="btn btn-primary mx-2" (click)="resetForm()">CLEAR</button>
+    </div>
   </form>
 </div>

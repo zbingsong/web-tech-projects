@@ -1,0 +1,38 @@
+div.card {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+div.card-title {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+@media all and (max-width: 640px) {
+  div.card {
+    width: 100%;
+  }
+
+  #div-distance {
+    width: 100%;
+  }
+  
+  #div-category {
+    width: 90%;
+  }
+}
+
+@media all and (min-width: 641px) {
+  div.card {
+    width: 640px;
+  }
+
+  #div-distance {
+    width: 50%;
+  }
+  
+  #div-category {
+    width: 40%;
+    padding-left: 15px;
+  }
+}
