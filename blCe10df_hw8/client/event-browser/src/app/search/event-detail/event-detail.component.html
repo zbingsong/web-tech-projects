@@ -1,23 +1,22 @@
-<div class="container card" [hidden]="!ifSearched || ifResultList">
-  <div class="row">
-    <button type="button" (click)="hideEventDetail()">
-      <mat-icon>keyboard_arrow_left</mat-icon>
+<div id="event-detail-container" class="mx-auto my-5" [hidden]="!ifSearched || ifResultList">
+  <div>
+    <button type="button" class="btn btn-link text-white" (click)="hideEventDetail()">
+      <mat-icon id="arrow-left">keyboard_arrow_left</mat-icon>
       <span>Back</span>
     </button>
   </div>
-  <div class="row">
-    <span>{{ eventDetail ? eventDetail.name : '' }}</span>
-    <button type="button">
-      <span class="material-icons">
-        lens
-      </span>
-      <mat-icon *ngIf="addedToFavorites">favorite</mat-icon>
-      <mat-icon *ngIf="!addedToFavorites">favorite_border</mat-icon>
+
+  <div class="text-center py-4">
+    <span class="text-white">{{ eventDetail ? eventDetail.name : '' }}</span>
+    <button type="button" id="like-button" class="btn btn-light rounded-circle ms-3" (click)="addToFavorites()">
+      <mat-icon class="heart-icon" *ngIf="addedToFavorites" style="color: red;">favorite</mat-icon>
+      <mat-icon class="heart-icon" *ngIf="!addedToFavorites">favorite_border</mat-icon>
     </button>
   </div>
-  <div class="row">
+
+  <div>
     <!-- tab navigator -->
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" color="primary">
       <mat-tab label="Events">
         <app-event-dashboard></app-event-dashboard>
       </mat-tab>
