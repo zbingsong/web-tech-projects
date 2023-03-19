@@ -1,12 +1,32 @@
-div.container {
-  border-radius: 10px;
+table {
+  border-radius: 20px;
 }
 
 table > thead > tr > th.sort-table, table > tbody > tr {
   cursor: pointer;
 }
 
-.card {
-  color: red;
-  font-weight: bold;
+img.event-icon {
+  height: 100px;
+}
+
+@media all and (max-width: 640px) {
+  div.card {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 641px) {
+  div.card {
+    width: 50%;
+    min-width: 640px;
+  }
+
+  table {
+    width: 70%;
+  }
 }
