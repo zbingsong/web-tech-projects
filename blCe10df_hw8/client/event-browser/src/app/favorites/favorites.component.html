@@ -1,7 +1,7 @@
-<h1>List of your favorite events</h1>
-<div class="container">
-  <div class="panel panel-default" *ngIf="favoriteEvents.length > 0; else elseBlock">
-    <table class="table">
+<div class="d-flex justify-content-center mt-5">
+  <div class="text-center" id="content" *ngIf="favoriteEvents.length > 0; else elseBlock">
+    <h3>List of your favorite events</h3>
+    <table class="table table-light table-striped overflow-hidden">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -37,7 +37,9 @@
     </table>
   </div>
   
-  <ng-template #elseBlock class="card">
-    No favorite events to show
+  <ng-template #elseBlock>
+    <div class="card text-center bg-white rounded-pill w-50 text-danger fw-bold pb-1">
+      No favorite events to show
+    </div>
   </ng-template>
 </div>

@@ -1,0 +1,23 @@
+i {
+  cursor: pointer;
+}
+
+h3 {
+  color:aqua;
+}
+
+.card, table {
+  border-radius: 12px;
+}
+
+@media all and (max-width: 640px) {
+  #content {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 641px) {
+  #content {
+    width: 70%;
+  }
+}
