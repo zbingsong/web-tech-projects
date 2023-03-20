@@ -49,7 +49,6 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   public showEventDetail(eventId: string): void {
     this.service.getEventDetail(eventId);
-    this.service.ifResultList$.next(false);
   }
 
   public sortTable(key: keyof EventInfo): void {
