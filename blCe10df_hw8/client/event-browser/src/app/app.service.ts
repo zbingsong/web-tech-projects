@@ -41,15 +41,19 @@ export class AppService {
 
   // called in search-box component
   public searchEvents(newSearch: SearchCriteria): void {
-    const requestUrl: string = `${this.API_ROUTE}/search?
-      keyword=${newSearch.keyword}
-      &distance=${newSearch.distance}
-      &category=${newSearch.category}
-      &lng=${newSearch.lng}
-      &lat=${newSearch.lat}`;
+    if (newSearch.lng > 180) {
+      this.eventInfoSubj$.next([]);
+      this.ifSearched$.next(true);
+      this.ifResultList$.next(true);
+      return;
+    }
+    // eslint-disable-next-line max-len, prettier/prettier
+    const requestUrl: string = `${this.API_ROUTE}/search?keyword=${encodeURIComponent(newSearch.keyword)}&distance=${newSearch.distance}&category=${newSearch.category}&lng=${newSearch.lng}&lat=${newSearch.lat}`;
     this.http.get<EventInfo[]>(requestUrl).subscribe({
       next: (data: EventInfo[]) => {
         this.eventInfoSubj$.next(data);
+        this.ifSearched$.next(true);
+        this.ifResultList$.next(true);
         // console.log(data);
       },
       error: (error: any) => {
@@ -64,6 +68,7 @@ export class AppService {
     this.http.get<EventDetail>(requestUrl).subscribe({
       next: (data: EventDetail) => {
         this.eventDetailSubj$.next(data);
+        this.ifResultList$.next(false);
       },
       error: (error: any) => {
         console.error(error);
@@ -75,7 +80,8 @@ export class AppService {
   public getArtistDetail(
     artistName: string,
   ): Observable<ArtistDetail | { id: string }> {
-    const requestUrl: string = `${this.API_ROUTE}/artist?keyword=${artistName}`;
+    // eslint-disable-next-line max-len, prettier/prettier
+    const requestUrl: string = `${this.API_ROUTE}/artist?keyword=${encodeURIComponent(artistName)}`;
     return this.http.get<ArtistDetail | { id: string }>(requestUrl).pipe(
       catchError((error: any) => {
         console.log(error);
