@@ -10,7 +10,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModule,
+  NgbNavModule,
+  NgbCarouselModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,6 +54,7 @@ import { EventDashboardComponent } from './search/event-detail/event-dashboard/e
     FormsModule,
     HttpClientModule,
     NgbNavModule,
+    NgbCarouselModule,
     MatAutocompleteModule,
     MatInputModule,
     MatTabsModule,
