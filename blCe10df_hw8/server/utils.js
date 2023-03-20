@@ -87,15 +87,14 @@ export function extractEventDetail(event) {
   if (event._embedded.attractions?.length) {
     extractedInfo.artists = event._embedded.attractions.map((attraction) => ({
       name: attraction.name, 
-      category: attraction.classifications.segment?.name ?? '',
-      url: attraction.url ?? '',
+      category: attraction.classifications[0].segment?.name ?? '',
     }));
   }
   // genre and category
   if (event.classifications?.length) {
-    const classifications = event.classifications;
+    const classifications = event.classifications[0];
     const genreArray = [];
-    const keys = ['segment', 'genre', 'subgenre', 'type', 'subtype'];
+    const keys = ['segment', 'genre', 'subGenre', 'type', 'subType'];
     keys.forEach((key) => {
       if (
         classifications[key] 
@@ -115,7 +114,7 @@ export function extractEventDetail(event) {
   }
   // price range
   if (event.priceRanges?.length) {
-    const priceInfo = event.priceRanges;
+    const priceInfo = event.priceRanges[0];
     extractedInfo.price 
       = `${priceInfo.min} - ${priceInfo.max} ${priceInfo.currency}`;
   }
@@ -140,6 +139,9 @@ export function extractArtistDetail(artistList) {
 }
 
 export function extractArtistAlbums(albumList) {
+  if (albumList.length > 3) {
+    albumList = albumList.slice(0, 3);
+  }
   return albumList.map((album) => album.images[0].url);
 }
 
