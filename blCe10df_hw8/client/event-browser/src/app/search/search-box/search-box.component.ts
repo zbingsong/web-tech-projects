@@ -81,23 +81,26 @@ export class SearchBoxComponent implements OnInit {
         const requestUrl: string = `https://ipinfo.io/?token=${IPINFO_API_KEY}`;
         this.http.get(requestUrl).subscribe((data: any) => {
           const coords = (data.loc as string).split(',');
-          this.newSearch.lng = parseFloat(coords[0]);
-          this.newSearch.lat = parseFloat(coords[1]);
+          this.newSearch.lng = parseFloat(coords[1]);
+          this.newSearch.lat = parseFloat(coords[0]);
           this.service.searchEvents(this.newSearch);
         });
       } else {
-        const requestUrl: string = `https://maps.googleapis.com/maps/api/geocode
-          /json?address=${this.location}&key=${GOOGLE_GEOCODING_API_KEY}`;
+        // eslint-disable-next-line max-len
+        const requestUrl: string = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.location}&key=${GOOGLE_GEOCODING_API_KEY}`;
         this.http.get(requestUrl).subscribe((data: any) => {
-          const coords = data.results[0].geometry.location;
-          this.newSearch.lng = coords.lng;
-          this.newSearch.lat = coords.lat;
+          if (data.results.length === 0) {
+            this.newSearch.lng = 200;
+            this.newSearch.lat = 200;
+          } else {
+            const coords = data.results[0].geometry.location;
+            this.newSearch.lng = coords.lng;
+            this.newSearch.lat = coords.lat;
+          }
           this.service.searchEvents(this.newSearch);
         });
       }
-      this.service.ifSearched$.next(true);
-      this.service.ifResultList$.next(true);
-      console.log('event searched');
+      // console.log('event searched');
     } catch (error) {
       console.error(`event search error: ${error as string}`);
     }
