@@ -14,9 +14,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let event of favoriteEvents; index as i">
-          <td>
+          <th>
             {{ i + 1 }}
-          </td>
+          </th>
           <td>
             {{ event.date }}
           </td>
@@ -38,7 +38,7 @@
   </div>
   
   <ng-template #elseBlock>
-    <div class="card text-center bg-white rounded-pill w-50 text-danger fw-bold pb-1">
+    <div class="card text-center bg-white rounded-pill text-danger fw-bold pb-1" id="no-content">
       No favorite events to show
     </div>
   </ng-template>
