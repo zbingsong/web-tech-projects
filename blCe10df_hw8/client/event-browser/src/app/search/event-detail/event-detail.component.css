@@ -1,7 +1,6 @@
 #event-detail-container {
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  width: 900px;
 }
 
 #arrow-left {
@@ -35,3 +34,14 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
+@media all and (max-width: 900px) {
+  #event-detail-container {
+    width: calc(100% - 12px);
+  }
+}
+
+@media all and (min-width: 901px) {
+  #event-detail-container {
+    width: 860px;
+  }
+}
