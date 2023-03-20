@@ -7,8 +7,8 @@
   </div>
 
   <div class="text-center py-4">
-    <span class="text-white">{{ eventDetail ? eventDetail.name : '' }}</span>
-    <button type="button" id="like-button" class="btn btn-light rounded-circle ms-3" (click)="addToFavorites()">
+    <span class="text-white fw-bold">{{ eventDetail ? eventDetail.name : '' }}</span>
+    <button type="button" id="like-button" class="btn btn-light rounded-circle ms-3" (click)="toggleFavorites()">
       <mat-icon class="heart-icon" *ngIf="addedToFavorites" style="color: red;">favorite</mat-icon>
       <mat-icon class="heart-icon" *ngIf="!addedToFavorites">favorite_border</mat-icon>
     </button>
