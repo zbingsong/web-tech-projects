@@ -6,6 +6,12 @@ import { EventDetail } from 'src/app/common/event-detail.interface';
 import { VenueDetail } from 'src/app/common/venue-detail.interface';
 import { MapDialogComponent } from './map-dialog/map-dialog.component';
 
+interface ShowTextBools {
+  hour: boolean;
+  rule: boolean;
+  child: boolean;
+}
+
 @Component({
   selector: 'app-venue-dashboard',
   templateUrl: './venue-dashboard.component.html',
@@ -14,7 +20,7 @@ import { MapDialogComponent } from './map-dialog/map-dialog.component';
 export class VenueDashboardComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
   public venueDetail?: VenueDetail;
-  public showAllText = {
+  public showAllText: ShowTextBools = {
     hour: false,
     rule: false,
     child: false,
@@ -46,10 +52,12 @@ export class VenueDashboardComponent implements OnInit, OnDestroy {
     if (this.venueDetail === undefined) return;
     this.dialog.open(MapDialogComponent, {
       data: { center: this.venueDetail.location, zoom: 14 },
+      width: 'min(100%, 550px)',
+      maxWidth: 'calc(100vw-12px)',
     });
   }
 
-  public toggleLongTextShow(category: keyof typeof this.showAllText): void {
+  public toggleLongTextShow(category: keyof ShowTextBools): void {
     this.showAllText[category] = !this.showAllText[category];
   }
 }
