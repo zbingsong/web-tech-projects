@@ -36,6 +36,9 @@ const PARENT_ROUTE = '/api';
 const TICKETMASTER_API_ROUTE = 'https://app.ticketmaster.com/discovery/v2';
 const SPOTIFY_TOKEN_TTL = 3600000;
 
+// serve static files
+app.use(express.static('dist'));
+
 // for auto complete
 app.get(`${PARENT_ROUTE}/suggest`, (request, response) => {
   // console.log(request.query);

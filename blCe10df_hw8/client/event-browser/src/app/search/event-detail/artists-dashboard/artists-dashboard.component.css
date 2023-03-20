@@ -3,8 +3,8 @@ div.slide {
 }
 
 img.artist-img {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
 }
 
 img.icon {
@@ -22,7 +22,7 @@ p.info-label, div.artist-name p {
 }
 
 div.artist-name {
-  width: 210px;
+  width: 180px;
 }
 
 div.popularity-number {
