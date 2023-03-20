@@ -19,7 +19,7 @@ export class AppService {
   public artistDetailSubj$ = new Subject<ArtistDetail>();
   public artistAlbumsSubj$ = new Subject<string[]>();
   // prefix of Node.js backend API
-  private readonly API_ROUTE = 'http://localhost:8081/api';
+  private readonly API_ROUTE = '/api';
   // for selectively displaying components
   public ifSearched$ = new Subject<boolean>();
   public ifResultList$ = new Subject<boolean>();
