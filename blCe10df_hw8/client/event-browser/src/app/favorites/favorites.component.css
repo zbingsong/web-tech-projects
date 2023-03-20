@@ -14,10 +14,18 @@ h3 {
   #content {
     width: 100%;
   }
+
+  #no-content {
+    width: 70%;
+  }
 }
 
 @media all and (min-width: 641px) {
   #content {
     width: 70%;
+  }
+
+  #no-content {
+    width: 50%;
   }
 }
