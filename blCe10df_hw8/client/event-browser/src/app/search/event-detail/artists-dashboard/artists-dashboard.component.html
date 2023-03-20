@@ -1,41 +1,47 @@
-<div *ngIf="eventCategory === 'Music'; else elseBlock" class="carousel slide" id="artist-detail-carousel" data-ride="carousel">
-  <div class="carousel-inner" *ngFor="let artist of artists">
-    <div class="carousel-item active">
-      <img src="{{ artist.image }}" class="d-block w-100" alt="{{ artist.name }}">
-      <div>
-        <p class="info-label">Popularity</p>
-        <mat-progress-spinner
-          class="example-margin"
-          [value]="artist.popularity">
-        </mat-progress-spinner>
-        <p>{{ artist.popularity }}</p>
-      </div>
-      <div>
-        <p class="info-label">Followers</p>
-        <p>{{ artist.followers.toLocaleString() }}</p>
-      </div>
-      <div>
-        <p class="info-label">Spotify Link</p>
-        <a href="{{ artist.url }}"><img src="../../../assets/spotify-logo-png-7075.png" class="icon"></a>
-      </div>
-      <div>
-        <p class="info-label">Album featuring {{ artist.name }}</p>
-        <div *ngFor="let albumImg in artist.albums">
-          <img class="album-img" src="{{ albumImg }}">
+<div *ngIf="eventCategory === 'Music'; else elseBlock" class="pt-2 pb-3 px-2">
+  <ngb-carousel [showNavigationArrows]="artists.length > 1" [showNavigationIndicators]="false">
+    <ng-template ngbSlide *ngFor="let artist of artists">
+      <div class="slide d-flex flex-wrap justify-content-evenly align-items-center">
+        <div class="artist-name text-center px-4 py-2 mx-3">
+          <img src="{{ artist.image }}" class="artist-img rounded-circle" alt="{{ artist.name }}">
+          <p class="fw-bold fs-4">{{ artist.name }}</p>
+        </div>
+  
+        <div class="artist-popularity text-center px-4 py-2 mx-4">
+          <p class="info-label fw-bold fs-5">Popularity</p>
+          <div class="position-relative">
+            <mat-progress-spinner [value]="artist.popularity" [diameter]="50" class="mx-auto"></mat-progress-spinner>
+            <div class="popularity-number fw-bold text-white position-absolute top-50 start-50 translate-middle">
+              {{ artist.popularity }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="artist-followers text-center px-4 py-2 mx-4">
+          <p class="info-label fw-bold fs-5">Followers</p>
+          <p class="text-white fw-bold pb-2">{{ artist.followers.toLocaleString() }}</p>
+        </div>
+  
+        <div class="artist-link text-center px-4 py-2 mx-4">
+          <p class="info-label fw-bold fs-5">Spotify Link</p>
+          <a target="_blank" href="{{ artist.url }}">
+            <img src="../../../assets/spotify-logo-png-7075.png" class="icon">
+          </a>
+        </div>
+   
+        <div class="text-white px-4 py-2">
+          <p class="info-label fw-bold fs-6 px-3">Album featuring {{ artist.name }}</p>
+          <div>
+            <img *ngFor="let albumImg of artist.albums" class="album-img p-3" src="{{ albumImg }}">
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#artist-detail-carousel" role="button" data-slide="prev" [hidden]="artists.length <= 1">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#artist-detail-carousel" role="button" data-slide="next" [hidden]="artists.length <= 1">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+    </ng-template>
+  </ngb-carousel>
 </div>
 
 <ng-template #elseBlock>
-  <span id="artist-no-content">No music related artist details to show</span>
+  <div id="artist-no-content" class="rounded-pill text-danger fw-bold bg-white text-center">
+    No music related artist details to show
+  </div>
 </ng-template>
