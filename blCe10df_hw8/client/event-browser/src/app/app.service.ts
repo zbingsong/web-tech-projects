@@ -32,7 +32,6 @@ export class AppService {
     const requestUrl: string = `${this.API_ROUTE}/suggest?keyword=${keyword}`;
     return this.http.get<string[]>(requestUrl).pipe(
       catchError((error: any) => {
-        console.log('service auto complete error');
         console.log(error);
         return of([]);
       }),
