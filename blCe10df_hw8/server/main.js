@@ -4,7 +4,7 @@ import axios from 'axios';
 import cors from 'cors';
 import express from 'express';
 import Geohash from 'latlon-geohash';
-// import util from 'node:util';
+import util from 'node:util';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { 
   CATEGORY_OPTIONS, 
@@ -66,7 +66,7 @@ app.get(`${PARENT_ROUTE}/suggest`, (request, response) => {
 // search event with keywords, location, and category
 app.get(`${PARENT_ROUTE}/search`, (request, response) => {
   const queries = request.query;
-  // console.log(`${Date()}: search event, params: ${util.inspect(queries)}`);
+  console.log(`${Date()}: search event, params: ${util.inspect(queries)}`);
   const geoHash = Geohash.encode(queries.lat, queries.lng, 7);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/events.json?apikey=${TICKETMASTER_API_KEY}&keyword=${queries.keyword}&geoPoint=${geoHash}&radius=${queries.distance}&unit=miles${CATEGORY_OPTIONS[queries.category]}`;
@@ -93,7 +93,7 @@ app.get(`${PARENT_ROUTE}/search`, (request, response) => {
 // get event detail with event's id
 app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
   const eventId = request.params.eventId;
-  // console.log(`${Date()}: get event detail, id=${eventId}`);
+  console.log(`${Date()}: get event detail, id=${eventId}`);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/events/${eventId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
@@ -116,7 +116,7 @@ app.get(`${PARENT_ROUTE}/event/:eventId`, (request, response) => {
 // get venue detail with venue's id
 app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
   const venueId = request.params.venueId;
-  // console.log(`${Date()}: get venue detail, id=${venueId}`);
+  console.log(`${Date()}: get venue detail, id=${venueId}`);
   // eslint-disable-next-line max-len
   const requestUrl = `${TICKETMASTER_API_ROUTE}/venues/${venueId}.json?apikey=${TICKETMASTER_API_KEY}`;
   axios.get(requestUrl)
@@ -138,7 +138,7 @@ app.get(`${PARENT_ROUTE}/venue/:venueId`, (request, response) => {
 
 // get artist info using Spotify API
 app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
-  // console.log(`${Date()}: search artist, keyword=${request.query.keyword}`);
+  console.log(`${Date()}: search artist, keyword=${request.query.keyword}`);
   if (Date.now() - lastSpotifyTokenRefresh >= SPOTIFY_TOKEN_TTL) {
     // console.log('refresh Spotify access token');
     lastSpotifyTokenRefresh = Date.now();
@@ -181,6 +181,7 @@ app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
           .then((albums) => {
             artistDetail.albums = albums;
             response.json(artistDetail);
+            console.log(artistDetail);
           });
         }
       })
@@ -220,6 +221,7 @@ app.get(`${PARENT_ROUTE}/artist`, (request, response) => {
           .then((albums) => {
             artistDetail.albums = albums;
             response.json(artistDetail);
+            console.log(artistDetail);
           });
         }
       })

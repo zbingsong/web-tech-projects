@@ -19,6 +19,7 @@ export class ArtistsDashboardComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.subscription = this.service.eventDetailSubj$.subscribe(
       (data: EventDetail) => {
+        this.artists = [];
         this.eventCategory = data.category;
         const artistList: Array<{ name: string; category: string }> =
           data.artists.filter((artist) => artist.category === 'Music');

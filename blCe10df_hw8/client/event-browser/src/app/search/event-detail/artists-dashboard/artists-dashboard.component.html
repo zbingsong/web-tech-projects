@@ -1,4 +1,4 @@
-<div *ngIf="eventCategory === 'Music'; else elseBlock" class="pt-2 pb-3 px-4">
+<div *ngIf="eventCategory === 'Music' && artists.length > 0; else elseBlock" class="pt-2 pb-3 px-4">
   <ngb-carousel [showNavigationArrows]="artists.length > 1" [showNavigationIndicators]="false">
     <ng-template ngbSlide *ngFor="let artist of artists">
       <div class="slide d-flex flex-wrap justify-content-evenly align-items-center">
