@@ -10,7 +10,7 @@ div.card-title {
 
 @media all and (max-width: 640px) {
   div.card {
-    width: 100%;
+    width: calc(100% - 12px);
   }
 
   #div-distance {
