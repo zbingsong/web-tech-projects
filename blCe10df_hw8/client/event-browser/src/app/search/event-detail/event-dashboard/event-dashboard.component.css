@@ -18,15 +18,26 @@ a img.icon {
   height: 30px;
 }
 
-#info-div {
-  min-width: 320px;
-  width: 43%;
-}
-
-#seatmap-div {
-  width: 57%;
-}
-
 #seatmap-div > img {
   width: 80%;
+}
+
+@media all and (max-width: 900px) {
+  #info-div {
+    width: 100%;
+  }
+
+  #seatmap-div {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 901px) {
+  #info-div {
+    width: 43%;
+  }
+
+  #seatmap-div {
+    width: 57%;
+  }
 }

@@ -1,39 +1,39 @@
 <div class="p-4">
-  <div class="d-flex" *ngIf="eventDetail !== undefined">
+  <div class="d-flex flex-wrap" *ngIf="eventDetail !== undefined">
     <div id="info-div" class="d-grid text-center text-white gap-3 p-2">
-      <div class="list-group-item border-0" *ngIf="eventDetail.date !== ''">
+      <div *ngIf="eventDetail.date !== ''">
         <p class="info-label fw-bold">Date</p>
         <p>{{ eventDetail.date }}</p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.artists.length !== 0">
+      <div *ngIf="eventDetail.artists.length !== 0">
         <p class="info-label fw-bold">Artists/Team</p>
         <p>{{ artistsText }}</p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.venue !== ''">
+      <div *ngIf="eventDetail.venue !== ''">
         <p class="info-label fw-bold">Venue</p>
         <p>{{ eventDetail.venue }}</p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.genre !== ''">
+      <div *ngIf="eventDetail.genre !== ''">
         <p class="info-label fw-bold">Genres</p>
         <p>{{ eventDetail.genre }}</p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.price !== ''">
+      <div *ngIf="eventDetail.price !== ''">
         <p class="info-label fw-bold">Price Ranges</p>
         <p>{{ eventDetail.price }}</p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.status !== ''">
+      <div *ngIf="eventDetail.status !== ''">
         <p class="info-label fw-bold">Ticket Status</p>
         <p class="ticket-status" [ngStyle]="{ 'background-color': eventDetail.status_color }">
           {{ eventDetail.status }}
         </p>
       </div>
   
-      <div class="list-group-item border-0" *ngIf="eventDetail.buy !== ''">
+      <div *ngIf="eventDetail.buy !== ''">
         <p class="info-label fw-bold">Buy Ticket At:</p>
         <p>
           <a href="{{ eventDetail.buy }}" target="_blank" rel="noopener noreferrer">Ticketmaster</a>
@@ -41,8 +41,8 @@
       </div>
     </div>
   
-    <div id="seatmap-div" class="p-2 position-relative">
-      <img src="{{ eventDetail.seatmap }}" class="position-absolute top-50 start-50 translate-middle">
+    <div id="seatmap-div" class="d-flex justify-content-center align-items-center p-2">
+      <img src="{{ eventDetail.seatmap }}" class="m-auto">
     </div>
   </div>
   
