@@ -1,11 +1,44 @@
+@media all and (max-width: 900px) {
+  #left-div {
+    width: 100%;
+  }
+  
+  #right-div {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 901px) {
+  #left-div {
+    width: 50%;
+  }
+  
+  #right-div {
+    width: 50%;
+  }
+}
+
+p {
+  margin: 0;
+}
+
 /* https://stackoverflow.com/questions/11989546/wrap-a-text-within-only-two-lines-inside-div */
 p.text-wrap {
-  line-height: 1em;
-  height: 2em;
+  line-height: 19px;
+  height: 38px;
   overflow: hidden;
 }
 
 p.show-all-text {
   overflow: visible;
   height: auto;
+}
+
+p.info-label {
+  color: #64FFDA;
+}
+
+.arrow-key {
+  width: 18px;
+  height: 18px;
 }

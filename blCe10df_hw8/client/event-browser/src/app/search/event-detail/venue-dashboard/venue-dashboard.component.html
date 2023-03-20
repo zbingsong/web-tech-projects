@@ -1,48 +1,52 @@
-<div *ngIf="venueDetail !== undefined">
-  <div class="justify-content-center" *ngIf="venueDetail.name !== ''">
-    <p class="info-label">Name</p>
-    <p>{{ venueDetail.name }}</p>
+<div *ngIf="venueDetail !== undefined" class="d-flex flex-wrap text-white text-center px-3 py-3">
+  <div id="left-div" class="px-2">
+    <div class="justify-content-center py-2" *ngIf="venueDetail.name !== ''">
+      <p class="info-label fw-bold">Name</p>
+      <p>{{ venueDetail.name }}</p>
+    </div>
+  
+    <div class="justify-content-center py-2" *ngIf="venueDetail.address !== ''">
+      <p class="info-label fw-bold">Address</p>
+      <p>{{ venueDetail.address }}</p>
+    </div>
+  
+    <div class="justify-content-center py-2" *ngIf="venueDetail.phone !== ''">
+      <p class="info-label fw-bold">Phone Number</p>
+      <p>{{ venueDetail.phone }}</p>
+    </div>
   </div>
+  
+  <div id="right-div" class="px-2">
+    <!-- https://stackoverflow.com/questions/70382245/show-more-show-less-text-but-hide-option-if-text-does-not-overflow-angular -->
+    <div class="justify-content-center py-2" *ngIf="venueDetail.openHours !== ''">
+      <p class="info-label fw-bold">Open Hours</p>
+      <p #contentHour class="text-wrap" [class.show-all-text]="showAllText.hour">{{ venueDetail.openHours }}</p>
+      <button type="button" class="btn btn-link" (click)="toggleLongTextShow('hour')" *ngIf="contentHour.scrollHeight > 38">
+        <span>{{ showAllText.hour ? 'Show less' : 'Show more' }}</span>
+        <mat-icon class="arrow-key text-white">{{ showAllText.hour ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+      </button>
+    </div>
 
-  <div class="justify-content-center" *ngIf="venueDetail.address !== ''">
-    <p class="info-label">Address</p>
-    <p>{{ venueDetail.address }}</p>
-  </div>
+    <div class="justify-content-center py-2" *ngIf="venueDetail.genRule !== ''">
+      <p class="info-label fw-bold">General Rule</p>
+      <p #contentRule class="text-wrap" [class.show-all-text]="showAllText.rule">{{ venueDetail.genRule }}</p>
+      <button type="button" class="btn btn-link" (click)="toggleLongTextShow('rule')" *ngIf="contentRule.scrollHeight > 39">
+        <span>{{ showAllText.rule ? 'Show less' : 'Show more' }}</span>
+        <mat-icon class="arrow-key text-white">{{ showAllText.rule ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+      </button>
+    </div>
 
-  <div class="justify-content-center" *ngIf="venueDetail.phone !== ''">
-    <p class="info-label">Phone Number</p>
-    <p>{{ venueDetail.phone }}</p>
-  </div>
-
-  <!-- https://stackoverflow.com/questions/70382245/show-more-show-less-text-but-hide-option-if-text-does-not-overflow-angular -->
-  <div class="justify-content-center" *ngIf="venueDetail.openHours !== ''">
-    <p class="info-label">Open Hours</p>
-    <p #contentHour class="text-wrap" [class.show-all-text]="showAllText.hour">{{ venueDetail.openHours }}</p>
-    <button type="button" (click)="toggleLongTextShow('hour')" *ngIf="contentHour.scrollHeight > 32">
-      <span>{{ showAllText.hour ? 'Show less' : 'Show more' }}</span>
-      <mat-icon>{{ showAllText.hour ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-    </button>
-  </div>
-
-  <div class="justify-content-center" *ngIf="venueDetail.genRule !== ''">
-    <p class="info-label">General Rule</p>
-    <p #contentRule class="text-wrap" [class.show-all-text]="showAllText.rule">{{ venueDetail.genRule }}</p>
-    <button type="button" (click)="toggleLongTextShow('rule')" *ngIf="contentRule.scrollHeight > 32">
-      <span>{{ showAllText.rule ? 'Show less' : 'Show more' }}</span>
-      <mat-icon>{{ showAllText.rule ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-    </button>
-  </div>
-
-  <div class="justify-content-center" *ngIf="venueDetail.childRule !== ''">
-    <p class="info-label">Child Rule</p>
-    <p #contentChild class="text-wrap" [class.show-all-text]="showAllText.child">{{ venueDetail.childRule }}</p>
-    <button type="button" (click)="toggleLongTextShow('child')" *ngIf="contentChild.scrollHeight > 32">
-      <span>{{ showAllText.child ? 'Show less' : 'Show more' }}</span>
-      <mat-icon>{{ showAllText.child ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-    </button>
+    <div class="justify-content-center py-2" *ngIf="venueDetail.childRule !== ''">
+      <p class="info-label fw-bold">Child Rule</p>
+      <p #contentChild class="text-wrap" [class.show-all-text]="showAllText.child">{{ venueDetail.childRule }}</p>
+      <button type="button" class="btn btn-link" (click)="toggleLongTextShow('child')" *ngIf="contentChild.scrollHeight > 39">
+        <span>{{ showAllText.child ? 'Show less' : 'Show more' }}</span>
+        <mat-icon class="arrow-key text-white">{{ showAllText.child ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
 
-<div>
+<div *ngIf="venueDetail !== undefined" class="d-flex justify-content-center pb-4">
   <button type="button" class="btn btn-danger" (click)="showMap()">Show venue on Google map</button>
 </div>
