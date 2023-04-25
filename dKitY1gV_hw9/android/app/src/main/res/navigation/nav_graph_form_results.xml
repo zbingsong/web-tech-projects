@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/formFragment">
+
+    <fragment
+        android:id="@+id/formFragment"
+        android:name="edu.bingo.eventbrowser.FormFragment"
+        android:label="formFragment"
+        tools:layout="@layout/fragment_form">
+        <action
+            android:id="@+id/action_FormFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="edu.bingo.eventbrowser.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_FormFragment"
+            app:destination="@id/formFragment" />
+        <argument
+            android:name="keyword"
+            app:argType="string" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <argument
+            android:name="distance"
+            app:argType="integer" />
+        <argument
+            android:name="ifDetect"
+            app:argType="boolean" />
+        <argument
+            android:name="location"
+            app:argType="string" />
+    </fragment>
+</navigation>

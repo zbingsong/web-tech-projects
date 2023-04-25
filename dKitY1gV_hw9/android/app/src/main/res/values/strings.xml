@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">EventFinder</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  for search fragment  -->
+    <!--  Tab title  -->
+    <string name="search_tab_title">SEARCH</string>
+    <string name="favorites_tab_title">FAVORITES</string>
+
+    <!--  for form fragment  -->
+    <string name="keyword_label">Keyword*</string>
+    <string name="keyword_input_placeholder">Enter the Keyword</string>
+    <string name="distance_label">Distance (Miles)*</string>
+    <string name="category_label">Category*</string>
+    <string name="location_label">Location*</string>
+    <string name="location_input_placeholder">Enter the Location</string>
+    <string name="auto_detect_label">Auto-Detect</string>
+    <string name="search_button_text">Search</string>
+    <string name="clear_button_text">Clear</string>
+    <string name="back_to_search_button_text">Back to Search</string>
+    <string-array name="dropdown_items">
+        <item>All</item>
+        <item>Arts &amp; Theatre</item>
+        <item>Sports</item>
+        <item>Music</item>
+        <item>Film</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
+    <!--  for results fragment  -->
+    <string name="no_result_available">No results available</string>
+
+    <!--  for favorites fragment  -->
+    <string name="no_fav_available">No favorites available</string>
+
+    <!--  for detail fragment  -->
+    <!--  for event fragment  -->
+    <string name="artist_label">Artist/Teams</string>
+    <string name="venue_label">Venue</string>
+    <string name="date_label">Date</string>
+    <string name="time_label">Time</string>
+    <string name="genres_label">Genres</string>
+    <string name="price_label">Price Range</string>
+    <string name="status_label">Ticket Status</string>
+    <string name="purchase_label">Buy Tickets At</string>
+
+    <!--  for artist fragment  -->
+    <string name="artist_link">Check out on Spotify</string>
+    <string name="artist_popularity_label">Popularity</string>
+    <string name="artist_albums_label">Popular Albums</string>
+    <string name="artist_no">Artist/Music data unavailable</string>
+
+    <!--  for venue fragment  -->
+    <string name="venue_name">Name</string>
+    <string name="venue_address">Address</string>
+    <string name="venue_city_state">City/State</string>
+    <string name="venue_contact">Contact Info</string>
+    <string name="venue_open">Open Hours</string>
+    <string name="venue_general">General Rules</string>
+    <string name="venue_child">Child Rules</string>
+</resources>
