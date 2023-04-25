@@ -46,6 +46,18 @@ app.get('/', (request, response) => {
   });
 });
 
+app.get('/search', (request, response) => {
+  response.sendFile('index.html', { root: 'dist' }, (error) => {
+    console.error(error);
+  });
+});
+
+app.get('/favorites', (request, response) => {
+  response.sendFile('index.html', { root: 'dist' }, (error) => {
+    console.error(error);
+  });
+});
+
 // for auto complete
 app.get(`${PARENT_ROUTE}/suggest`, (request, response) => {
   // console.log(`${Date()}: auto complete, keyword ${request.query.keyword}`);
