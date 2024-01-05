@@ -1,2 +1,1 @@
-# zbingsong.github.io
-random things
+# Web Tech Projects
